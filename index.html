@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excel Academy — Excel bo'yicha interaktiv o'quv tizimi</title>
+  <meta name="description" content="Excel kurslarini zamonaviy ko'rinishda o'rganing. Foundation va PRO Automation kurslari, interaktiv darslar, quiz va sertifikat.">
+  <meta name="keywords" content="Excel, kurs, o'rganish, formula, VLOOKUP, Pivot Table, VBA">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="light">
+
+  <!-- ==================== LOADER ==================== -->
+  <div id="app-loader">
+    <div class="loader-box">
+      <div class="loader-icon">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <rect x="4" y="4" width="56" height="56" rx="8" fill="#217346"/>
+          <text x="32" y="42" text-anchor="middle" font-size="28" font-weight="700" fill="white" font-family="Segoe UI, sans-serif">X</text>
+        </svg>
+      </div>
+      <div class="loader-bar">
+        <div class="loader-bar-fill"></div>
+      </div>
+      <p class="loader-text">Excel Academy yuklanmoqda...</p>
+    </div>
+  </div>
+
+  <!-- ==================== HEADER (Excel 365 uslubi) ==================== -->
+  <header class="header" id="header">
+    <div class="header-inner">
+
+      <!-- Logo -->
+      <a href="#home" class="header-logo" data-page="home">
+        <div class="header-logo-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="6" fill="#217346"/>
+            <text x="16" y="22" text-anchor="middle" font-size="16" font-weight="700" fill="white" font-family="Segoe UI">X</text>
+          </svg>
+        </div>
+        <span class="header-logo-text">Excel Academy</span>
+      </a>
+      <!-- Nav -->
+      <nav class="header-nav" id="header-nav">
+<a href="#sandbox" class="header-nav-link" data-page="sandbox">
+  <i class="fas fa-flask"></i>
+  <span>Sandbox</span>
+</a>
+        <a href="#home" class="header-nav-link active" data-page="home">
+          <i class="fas fa-home"></i>
+          <span data-i18n="nav_home">Bosh sahifa</span>
+        </a>
+        <a href="#courses" class="header-nav-link" data-page="courses">
+          <i class="fas fa-book"></i>
+          <span data-i18n="nav_courses">Kurslar</span>
+        </a>
+        <a href="#dashboard" class="header-nav-link" data-page="dashboard">
+          <i class="fas fa-chart-bar"></i>
+          <span data-i18n="nav_dashboard">Dashboard</span>
+        </a>
+        <a href="#certificates" class="header-nav-link" data-page="certificates">
+          <i class="fas fa-certificate"></i>
+          <span data-i18n="nav_certificates">Sertifikat</span>
+        </a>
+        <a href="#admin" class="header-nav-link nav-admin-link" id="nav-admin-link" style="display:none;" data-page="admin">
+          <i class="fas fa-cog"></i>
+          <span>Admin</span>
+        </a>
+      </nav>
+
+      <!-- Right side -->
+      <div class="header-actions">
+
+        <!-- Til -->
+        <div class="header-lang" id="header-lang">
+          <button class="header-action-btn" id="lang-toggle" title="Tilni o'zgartirish">
+            <i class="fas fa-globe"></i>
+            <span id="lang-current">UZ</span>
+          </button>
+          <div class="lang-dropdown" id="lang-dropdown">
+            <button class="lang-option active" data-lang="uz">
+              <span>🇺🇿</span> O'zbek
+            </button>
+            <button class="lang-option" data-lang="ru">
+              <span>🇷🇺</span> Русский
+            </button>
+            <button class="lang-option" data-lang="en">
+              <span>🇬🇧</span> English
+            </button>
+          </div>
+        </div>
+
+        <!-- Tema -->
+        <button class="header-action-btn" id="theme-toggle" title="Tema o'zgartirish">
+          <i class="fas fa-sun" id="theme-icon"></i>
+        </button>
+
+        <!-- Auth (kirmaganlar uchun) -->
+        <div class="header-auth" id="header-auth">
+          <button class="btn btn-outline-green btn-sm" data-page="login">
+            <i class="fas fa-sign-in-alt"></i>
+            <span data-i18n="nav_login">Kirish</span>
+          </button>
+          <button class="btn btn-green btn-sm" data-page="register">
+            <i class="fas fa-user-plus"></i>
+            <span data-i18n="nav_register">Ro'yxatdan o'tish</span>
+          </button>
+        </div>
+
+        <!-- User (kirganlar uchun) -->
+        <div class="header-user" id="header-user" style="display:none;">
+          <button class="user-btn" id="user-btn">
+            <div class="user-avatar-sm" id="user-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <span class="user-display-name" id="user-display-name">User</span>
+            <i class="fas fa-chevron-down user-chevron"></i>
+          </button>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-dropdown-header">
+              <div class="user-dropdown-avatar" id="dd-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="user-dropdown-info">
+                <span class="user-dropdown-name" id="dd-name">Foydalanuvchi</span>
+                <span class="user-dropdown-email" id="dd-email">email@mail.com</span>
+                <span class="user-dropdown-role" id="dd-role">Student</span>
+              </div>
+            </div>
+            <div class="user-dropdown-divider"></div>
+            <a href="#dashboard" class="user-dropdown-item" data-page="dashboard">
+              <i class="fas fa-chart-bar"></i> Dashboard
+            </a>
+            <a href="#profile" class="user-dropdown-item" data-page="profile">
+              <i class="fas fa-user-edit"></i> Profil
+            </a>
+            <a href="#certificates" class="user-dropdown-item" data-page="certificates">
+              <i class="fas fa-certificate"></i> Sertifikatlar
+            </a>
+            <div class="user-dropdown-divider"></div>
+            <button class="user-dropdown-item user-dropdown-logout" id="btn-logout">
+              <i class="fas fa-sign-out-alt"></i> Chiqish
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile burger -->
+        <button class="burger" id="burger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="main" id="main-content">
+    <!-- Router renders pages here -->
+  </main>
+
+  <!-- ==================== TOAST ==================== -->
+  <div id="toast-container"></div>
+
+  <!-- ==================== SCRIPTS (tartib muhim) ==================== -->
+   <!-- ==================== SCRIPTS ==================== -->
+  <script src="js/firebase.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/courses.js"></script>
+  <script src="js/lessons.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/certificate.js"></script>
+  <script src="js/dashboard.js"></script>   <!-- ⬅️ QO'SHING -->
+  <script src="js/admin.js"></script>       <!-- ⬅️ QO'SHING -->
+  <script src="js/router.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

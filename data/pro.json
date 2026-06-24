@@ -1,0 +1,1897 @@
+{
+  "id": "pro",
+  "title": "Excel PRO Automation",
+  "description": "Excel'da professional darajaga chiqing. Advanced formulalar, Dashboard PRO, VBA va ChatGPT bilan avtomatlashtirish.",
+  "level": "Professional",
+  "color": "pro",
+  "icon": "fa-rocket",
+  "duration": "12 kun",
+  "lessons_count": 12,
+  "rating": 4.9,
+  "students": 520,
+  "price": "Premium",
+  "objectives": [
+    "Murakkab formulalarni professional darajada qo'llash",
+    "Dynamic formulalar bilan ishlash (FILTER, UNIQUE, SORT)",
+    "Order Management tizimini Excel'da yaratish",
+    "Interactive Dashboard yaratish",
+    "ChatGPT yordamida Excel ishlarini avtomatlashtirish",
+    "VBA asoslarini o'rganish",
+    "Avtomatik hisobot tayyorlash"
+  ],
+  "modules": [
+    {
+      "id": "pro-mod-1",
+      "title": "Advanced Formulas",
+      "lessons": [
+        {
+          "id": "lesson-1",
+          "title": "Advanced Formulas",
+          "day": 1,
+          "duration": "60 min",
+          "description": "Professional formulalar bilan tanishish",
+          "topics": [
+            "SUMPRODUCT - kuchli funksiya",
+            "INDIRECT - dinamik manzillash",
+            "CHOOSE va SWITCH",
+            "Array Formulas (CSE)",
+            "Text funksiyalari (TEXT, CONCATENATE, TEXTJOIN)"
+          ],
+          "content": [
+            {
+              "type": "heading",
+              "level": 2,
+              "text": "SUMPRODUCT - Eng kuchli funksiya"
+            },
+            {
+              "type": "paragraph",
+              "text": "SUMPRODUCT — bir nechta diapazonlarni ko'paytirib, yig'indini topadi. U IF, COUNTIF, SUMIF ning kombinatsiyasini bitta formulada qila oladi."
+            },
+            {
+              "type": "code",
+              "code": "=SUMPRODUCT(A2:A10, B2:B10)\n→ A2*B2 + A3*B3 + ... + A10*B10\n\n=SUMPRODUCT((A2:A10=\"Olma\")*B2:B10)\n→ A da 'Olma' bo'lganda B yig'indisi (SUMIF kabi)\n\n=SUMPRODUCT((A2:A10=\"Olma\")*(C2:C10>100)*B2:B10)\n→ Ko'p shartli yig'indi (SUMIFS kabi)"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "INDIRECT - Dinamik manzillash"
+            },
+            {
+              "type": "paragraph",
+              "text": "INDIRECT - matn ko'rinishida yozilgan katak manzilini real manzilga aylantiradi."
+            },
+            {
+              "type": "code",
+              "code": "=INDIRECT(\"A1\")     → A1 qiymatini qaytaradi\n=INDIRECT(\"A\" & 5)   → A5 qiymatini qaytaradi\n=INDIRECT(\"Sheet2!A1\") → Sheet2 dagi A1\n\n=SUM(INDIRECT(\"A1:A\" & B1))\n→ A1 dan A(B1 qiymati) gacha yig'indi"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Text funksiyalari"
+            },
+            {
+              "type": "list",
+              "items": [
+                "<code>LEFT(\"Excel\", 3)</code> → \"Exc\" (chap tomondan)",
+                "<code>RIGHT(\"Excel\", 2)</code> → \"el\" (o'ng tomondan)",
+                "<code>MID(\"Excel\", 2, 3)</code> → \"xce\" (o'rtadan)",
+                "<code>LEN(\"Excel\")</code> → 5 (uzunlik)",
+                "<code>UPPER(\"excel\")</code> → \"EXCEL\"",
+                "<code>LOWER(\"EXCEL\")</code> → \"excel\"",
+                "<code>PROPER(\"hello world\")</code> → \"Hello World\"",
+                "<code>TRIM(\"  hello  \")</code> → \"hello\""
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "TEXTJOIN - Matnlarni birlashtirish"
+            },
+            {
+              "type": "code",
+              "code": "=TEXTJOIN(\", \", TRUE, A1:A5)\n→ \"Ali, Vali, Gulnora, Sardor, Aziza\"\n\n=CONCATENATE(A1, \" \", B1)\n→ A1 va B1 ni probel bilan birlashtiradi\n\n=A1 & \" \" & B1\n→ Yuqoridagi bilan bir xil (& operatori)"
+            }
+          ],
+          "formulas": [
+            {
+              "name": "SUMPRODUCT (oddiy)",
+              "formula": "=SUMPRODUCT(A2:A10, B2:B10)",
+              "description": "Soni × Narxi yig'indisi"
+            },
+            {
+              "name": "SUMPRODUCT (shartli)",
+              "formula": "=SUMPRODUCT((A2:A10=\"Olma\")*B2:B10)",
+              "description": "Faqat 'Olma' bo'lgan qatorlardagi B yig'indisi"
+            },
+            {
+              "name": "INDIRECT (dinamik)",
+              "formula": "=INDIRECT(\"A\" & B1)",
+              "description": "B1 dagi raqamga qarab A ustunidagi katakni topish"
+            },
+            {
+              "name": "TEXTJOIN",
+              "formula": "=TEXTJOIN(\", \", TRUE, A1:A10)",
+              "description": "Bo'sh kataklarni o'tkazib, vergul bilan birlashtirish"
+            },
+            {
+              "name": "CHOOSE",
+              "formula": "=CHOOSE(2, \"Yak\", \"Du\", \"Se\", \"Cho\")",
+              "description": "→ 'Du' qaytaradi (2-element)"
+            }
+          ],
+          "shortcuts": [
+            { "action": "Array formula (eski)", "keys": "Ctrl + Shift + Enter" },
+            { "action": "Auto-complete", "keys": "Tab" },
+            { "action": "Function help", "keys": "Ctrl + A (after =)" }
+          ],
+          "examples": [
+            {
+              "title": "Sotuvlar tahlili",
+              "description": "SUMPRODUCT bilan ko'p shartli hisob",
+              "table": {
+                "headers": ["Mahsulot", "Soni", "Narxi"],
+                "rows": [
+                  ["Olma", "10", "5000"],
+                  ["Banan", "15", "3000"],
+                  ["Olma", "20", "5000"],
+                  ["Apelsin", "8", "7000"]
+                ]
+              },
+              "formula": "=SUMPRODUCT((A2:A5=\"Olma\")*B2:B5*C2:C5)",
+              "result": "150,000 (Olma uchun jami: 10×5000 + 20×5000)"
+            }
+          ],
+          "simulator": true,
+          "simulatorData": {
+            "A1": "Mahsulot", "B1": "Soni", "C1": "Narxi",
+            "A2": "Olma", "B2": "10", "C2": "5000",
+            "A3": "Banan", "B3": "15", "C3": "3000",
+            "A4": "Olma", "B4": "20", "C4": "5000",
+            "A5": "Apelsin", "B5": "8", "C5": "7000"
+          },
+          "quiz": {
+            "passingScore": 70,
+            "timeLimit": 7,
+            "questions": [
+              {
+                "question": "SUMPRODUCT nima qiladi?",
+                "options": [
+                  "Faqat ko'paytiradi",
+                  "Faqat qo'shadi",
+                  "Diapazonlarni ko'paytirib yig'adi",
+                  "O'rtacha topadi"
+                ],
+                "correct": 2,
+                "explanation": "SUMPRODUCT diapazonlarni element-element ko'paytirib, natijalarni yig'adi."
+              },
+              {
+                "question": "INDIRECT(\"A1\") nimani qaytaradi?",
+                "options": [
+                  "\"A1\" matni",
+                  "A1 katakning qiymati",
+                  "Xato",
+                  "A1 manzili"
+                ],
+                "correct": 1,
+                "explanation": "INDIRECT matn ko'rinishidagi manzilni real katakka aylantiradi."
+              },
+              {
+                "question": "TEXTJOIN ning afzalligi nimada?",
+                "options": [
+                  "Tezroq ishlaydi",
+                  "Bo'sh kataklarni o'tkazib yuboradi",
+                  "Faqat raqam uchun",
+                  "Hech qanday afzallik yo'q"
+                ],
+                "correct": 1,
+                "explanation": "TEXTJOIN ning ikkinchi argumenti TRUE bo'lsa, bo'sh kataklarni e'tiborga olmaydi."
+              },
+              {
+                "question": "LEFT(\"Excel\", 3) natijasi?",
+                "options": ["\"Exc\"", "\"cel\", \"el\"", "\"Excel\""],
+                "correct": 0,
+                "explanation": "LEFT chap tomondan berilgan sonda belgi oladi: \"Exc\"."
+              }
+            ]
+          }
+        },
+        {
+          "id": "lesson-2",
+          "title": "SUMIF + IF Combinations",
+          "day": 2,
+          "duration": "50 min",
+          "description": "SUMIF va IF ni birga ishlatish — kuchli kombinatsiyalar",
+          "topics": [
+            "SUMIFS va IF kombinatsiyasi",
+            "Nested IF + SUMIF",
+            "SUMIF + VLOOKUP",
+            "Array formula ko'rinishidagi yechimlar",
+            "IFERROR bilan xato boshqaruvi"
+          ],
+          "content": [
+            {
+              "type": "heading",
+              "level": 2,
+              "text": "IF + SUMIF kombinatsiyasi"
+            },
+            {
+              "type": "paragraph",
+              "text": "Ba'zan murakkab muammolarni hal qilish uchun bir nechta funksiyalarni birlashtirib ishlatish kerak bo'ladi."
+            },
+            {
+              "type": "code",
+              "code": "=IF(SUMIF(A:A, \"Olma\", B:B) > 1000,\n    \"Ko'p sotildi\",\n    \"Kam sotildi\")\n\n→ Agar Olma sotuvi 1000 dan ko'p bo'lsa, \"Ko'p sotildi\"\n  aks holda \"Kam sotildi\""
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "IFERROR - Xato boshqaruvi"
+            },
+            {
+              "type": "paragraph",
+              "text": "IFERROR formulaga xato bersa, sizning xohlagan matningizni ko'rsatadi."
+            },
+            {
+              "type": "code",
+              "code": "=IFERROR(VLOOKUP(A1, B:C, 2, FALSE), \"Topilmadi\")\n=IFERROR(A1/B1, 0)  ← Nolga bo'lish xatosini hal qiladi\n=IFERROR(formula, \"\")  ← Bo'sh qaytaradi"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Murakkab misol: Bonus hisoblash"
+            },
+            {
+              "type": "code",
+              "code": "=IF(SUMIF(A:A, B1, C:C) > 10000000,\n    SUMIF(A:A, B1, C:C) * 0.1,\n    IF(SUMIF(A:A, B1, C:C) > 5000000,\n        SUMIF(A:A, B1, C:C) * 0.05,\n        0))\n\n→ Xodim sotuvi:\n  10M dan ko'p — 10% bonus\n  5M dan ko'p — 5% bonus\n  Aks holda — 0"
+            },
+            {
+              "type": "note",
+              "text": "Bunday murakkab formulalarni yordamchi ustunlarga bo'lib yozish o'qish va tahrirlashni osonlashtiradi."
+            }
+          ],
+          "formulas": [
+            {
+              "name": "SUMIF + IF",
+              "formula": "=IF(SUMIF(A:A,B1,C:C)>1000,\"Ko'p\",\"Kam\")",
+              "description": "Shartli yig'indi natijasiga qarab matn"
+            },
+            {
+              "name": "IFERROR + VLOOKUP",
+              "formula": "=IFERROR(VLOOKUP(A1,B:D,3,FALSE),\"-\")",
+              "description": "Topilmasa '-' belgisi"
+            },
+            {
+              "name": "SUMIFS + IF",
+              "formula": "=IF(SUMIFS(D:D,A:A,B1,C:C,\">100\")>0,\"Bor\",\"Yo'q\")",
+              "description": "Ko'p shartli yig'indi tekshiruvi"
+            }
+          ],
+          "shortcuts": [
+            { "action": "Formula auditi", "keys": "Ctrl + ` (backtick)" },
+            { "action": "Bog'liq kataklarni ko'rsatish", "keys": "Ctrl + ]" },
+            { "action": "Asosiy katakka qaytish", "keys": "F5 → Special" }
+          ],
+          "examples": [
+            {
+              "title": "Bonus tizimi",
+              "description": "Xodimlar sotuviga qarab bonus hisoblash",
+              "table": {
+                "headers": ["Xodim", "Sotuv", "Bonus %"],
+                "rows": [
+                  ["Ali", "12000000", "10%"],
+                  ["Vali", "7000000", "5%"],
+                  ["Gulnora", "3000000", "0%"],
+                  ["Sardor", "15000000", "10%"]
+                ]
+              }
+            }
+          ],
+          "simulator": true,
+          "quiz": {
+            "passingScore": 70,
+            "timeLimit": 6,
+            "questions": [
+              {
+                "question": "IFERROR nima qiladi?",
+                "options": [
+                  "Xato bersa to'xtatadi",
+                  "Xato bersa alternativa qaytaradi",
+                  "Xato bersa o'chiradi",
+                  "Hech narsa"
+                ],
+                "correct": 1,
+                "explanation": "IFERROR formuladagi xato bo'lsa, ikkinchi argumentdagi qiymatni qaytaradi."
+              },
+              {
+                "question": "Nested IF maksimal nechta darajada bo'lishi mumkin?",
+                "options": ["3", "5", "7", "Cheksiz"],
+                "correct": 2,
+                "explanation": "Excel'da nested IF maksimum 7 darajada bo'lishi mumkin (eski versiyalarda)."
+              },
+              {
+                "question": "Bo'lish xatosini (#DIV/0!) qanday hal qilish mumkin?",
+                "options": [
+                  "Hech qanday yo'l yo'q",
+                  "=IFERROR(A1/B1, 0)",
+                  "=IF(B1=0, 0, A1/B1)",
+                  "B va C ikkalasi"
+                ],
+                "correct": 3,
+                "explanation": "Ikkala usul ham ishlaydi: IFERROR yoki IF orqali tekshirish."
+              }
+            ]
+          }
+        },
+        {
+          "id": "lesson-3",
+          "title": "XLOOKUP Advanced",
+          "day": 3,
+          "duration": "55 min",
+          "description": "XLOOKUP ning yashirin kuchli imkoniyatlari",
+          "topics": [
+            "XLOOKUP barcha argumentlari",
+            "Wildcards (* va ?) bilan qidirish",
+            "XMATCH funksiyasi",
+            "Bidirectional lookup (2 yo'nalishli)",
+            "Nested XLOOKUP"
+          ],
+          "content": [
+            {
+              "type": "heading",
+              "level": 2,
+              "text": "XLOOKUP to'liq sintaksisi"
+            },
+            {
+              "type": "code",
+              "code": "=XLOOKUP(qidirish, qidirish_diapazoni, qaytarish_diapazoni,\n         [agar_topilmasa], [moslik_turi], [qidirish_yo'nalishi])\n\n5-argument (match_mode):\n  0 — Aniq (default)\n  -1 — Aniq yoki keyingi kichkina\n  1  — Aniq yoki keyingi katta\n  2  — Wildcards (*, ?)\n\n6-argument (search_mode):\n  1  — Birinchidan oxirgisi (default)\n  -1 — Oxirgidan birinchisi\n  2  — Binary (saralangan A→Z)\n  -2 — Binary (saralangan Z→A)"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Wildcards bilan qidirish"
+            },
+            {
+              "type": "code",
+              "code": "=XLOOKUP(\"*Ali*\", A:A, B:B, \"\", 2)\n→ \"Ali\" so'zi bor istalgan matnni topadi\n\n=XLOOKUP(\"A??\", A:A, B:B, \"\", 2)\n→ A bilan boshlanib, 3 ta belgili matn (A01, A99, ...)"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Oxirgi yozuvni topish"
+            },
+            {
+              "type": "code",
+              "code": "=XLOOKUP(B1, A:A, C:C, \"-\", 0, -1)\n→ Oxirgi mos kelgan qiymatni topadi (oldingi emas)\n\nBu xodimning oxirgi sotuvini topishda foydali"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "XMATCH - Pozitsiyani topish"
+            },
+            {
+              "type": "paragraph",
+              "text": "XMATCH — element diapazonda nechanchi o'rinda turganini qaytaradi."
+            },
+            {
+              "type": "code",
+              "code": "=XMATCH(\"Olma\", A:A)\n→ A ustunida 'Olma' nechanchi qatorda\n\n=INDEX(C:C, XMATCH(B1, A:A))\n→ XLOOKUP ga muqobil"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Bidirectional Lookup (Matritsada qidirish)"
+            },
+            {
+              "type": "code",
+              "code": "=XLOOKUP(B1, A2:A10, XLOOKUP(B2, B1:Z1, B2:Z10))\n\n→ Bir vaqtda qator va ustun bo'yicha qidirish\n→ INDEX-MATCH-MATCH ga muqobil"
+            }
+          ],
+          "formulas": [
+            {
+              "name": "XLOOKUP (default bilan)",
+              "formula": "=XLOOKUP(A1, B:B, C:C, \"Topilmadi\")",
+              "description": "Topilmasa 'Topilmadi' yozadi"
+            },
+            {
+              "name": "XLOOKUP (wildcard)",
+              "formula": "=XLOOKUP(\"*Tosh*\", A:A, B:B, \"\", 2)",
+              "description": "Substring qidirish"
+            },
+            {
+              "name": "XLOOKUP (oxirgi)",
+              "formula": "=XLOOKUP(B1, A:A, C:C, \"\", 0, -1)",
+              "description": "Oxirgi mos kelgan qiymat"
+            },
+            {
+              "name": "Bidirectional",
+              "formula": "=XLOOKUP(F1, A2:A10, XLOOKUP(F2, B1:E1, B2:E10))",
+              "description": "Qator va ustun bo'yicha qidirish"
+            }
+          ],
+          "shortcuts": [
+            { "action": "Function dialog", "keys": "Shift + F3" },
+            { "action": "Argument tooltip", "keys": "Ctrl + Shift + A" }
+          ],
+          "examples": [
+            {
+              "title": "Mahsulot ma'lumotlari",
+              "description": "XLOOKUP wildcards bilan qidirish",
+              "table": {
+                "headers": ["Kod", "Nom", "Narxi"],
+                "rows": [
+                  ["TS-001", "Olma (Toshkent)", "5000"],
+                  ["TS-002", "Banan (Toshkent)", "3000"],
+                  ["SM-001", "Olma (Samarqand)", "4500"],
+                  ["BX-001", "Anor (Buxoro)", "8000"]
+                ]
+              },
+              "formula": "=XLOOKUP(\"*Toshkent*\", B:B, C:C, \"-\", 2)",
+              "result": "5,000 (birinchi mos kelgan)"
+            }
+          ],
+          "simulator": true,
+          "quiz": {
+            "passingScore": 70,
+            "timeLimit": 6,
+            "questions": [
+              {
+                "question": "XLOOKUP da wildcards uchun nechinchi argument?",
+                "options": ["3", "4", "5", "6"],
+                "correct": 2,
+                "explanation": "5-argument (match_mode) ni 2 ga qo'ying — wildcards ishlaydi."
+              },
+              {
+                "question": "Oxirgi mos kelgan qiymatni topish uchun search_mode?",
+                "options": ["1", "-1", "2", "-2"],
+                "correct": 1,
+                "explanation": "search_mode = -1 → oxirgidan birinchisi tomon qidiradi."
+              },
+              {
+                "question": "XMATCH nima qaytaradi?",
+                "options": [
+                  "Qiymatni",
+                  "Pozitsiyani (raqam)",
+                  "Mantiqiy",
+                  "Matnni"
+                ],
+                "correct": 1,
+                "explanation": "XMATCH element nechanchi o'rinda turganini sondan qaytaradi."
+              },
+              {
+                "question": "* va ? qaerda ishlatiladi?",
+                "options": [
+                  "Hisoblash uchun",
+                  "Wildcards (qisman qidirish)",
+                  "Operatorlar",
+                  "Mantiqiy"
+                ],
+                "correct": 1,
+                "explanation": "* — istalgan miqdor belgi, ? — bitta belgi (wildcards)."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pro-mod-2",
+      "title": "Dynamic Arrays va Order Management",
+      "lessons": [
+        {
+          "id": "lesson-4",
+          "title": "Dynamic Formulas",
+          "day": 4,
+          "duration": "60 min",
+          "description": "Excel 365 ning yangi dinamik massiv formulalari",
+          "topics": [
+            "FILTER — ma'lumotlarni filtrlash",
+            "UNIQUE — takrorlanmas qiymatlar",
+            "SORT va SORTBY",
+            "SEQUENCE — avtomatik sonlar",
+            "Spill va # operator"
+          ],
+          "content": [
+            {
+              "type": "heading",
+              "level": 2,
+              "text": "Dynamic Arrays nima?"
+            },
+            {
+              "type": "paragraph",
+              "text": "Excel 365 da yangi 'Dynamic Arrays' funksiyalari paydo bo'ldi. Ular bitta formuladan ko'p natija qaytarib, kataklarni avtomatik to'ldiradi (Spill)."
+            },
+            {
+              "type": "note",
+              "text": "Spill — formula natijalari avtomatik ravishda boshqa kataklarga 'to'kiladi'. Agar joy band bo'lsa #SPILL! xatosi chiqadi."
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "FILTER funksiyasi"
+            },
+            {
+              "type": "code",
+              "code": "=FILTER(diapazon, shart, [agar_bo'sh])\n\n=FILTER(A2:C100, B2:B100>1000)\n→ B 1000 dan katta bo'lgan barcha qatorlar\n\n=FILTER(A2:C100, (B2:B100=\"Olma\")*(C2:C100>100))\n→ Ikki shart: B='Olma' VA C>100\n\n=FILTER(A2:C100, (B2:B100=\"Olma\")+(B2:B100=\"Banan\"))\n→ B='Olma' YOKI B='Banan' (+ = OR)"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "UNIQUE - Takrorlanmaslar"
+            },
+            {
+              "type": "code",
+              "code": "=UNIQUE(A2:A100)\n→ Faqat takrorlanmas qiymatlar\n\n=UNIQUE(A2:A100, FALSE, TRUE)\n→ Faqat 1 marta uchragan qiymatlar (unique only)\n\n=SORT(UNIQUE(A2:A100))\n→ Takrorlanmas va saralangan"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "SORT va SORTBY"
+            },
+            {
+              "type": "code",
+              "code": "=SORT(A2:C100, 2, -1)\n→ 2-ustun bo'yicha kamayuvchi tartibda saralash\n\n=SORTBY(A2:A100, B2:B100, -1, C2:C100, 1)\n→ A ustunini B (kamayuvchi) va C (o'suvchi) bo'yicha"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "SEQUENCE - Sonlar qatori"
+            },
+            {
+              "type": "code",
+              "code": "=SEQUENCE(10)        → 1, 2, 3, ..., 10\n=SEQUENCE(5, 3)      → 5 qator, 3 ustun\n=SEQUENCE(10, 1, 100, 5)  → 100, 105, 110, 115, ...\n\n=SEQUENCE(12,1,DATE(2025,1,1),31)\n→ Har oyning 1-sanasi 2025-yil"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "# operator (Spill range)"
+            },
+            {
+              "type": "code",
+              "code": "Agar D1 da: =UNIQUE(A:A)\nNatijalar D1, D2, D3, ... ga to'kiladi (spill)\n\nBoshqa joyda: =D1#  ← Butun spill diapazoniga murojaat\n=COUNTA(D1#)  ← Spill dagi elementlar soni"
+            }
+          ],
+          "formulas": [
+            {
+              "name": "FILTER",
+              "formula": "=FILTER(A:C, B:B>1000, \"Topilmadi\")",
+              "description": "B 1000 dan katta qatorlar"
+            },
+            {
+              "name": "UNIQUE",
+              "formula": "=SORT(UNIQUE(A2:A100))",
+              "description": "Takrorlanmas va saralangan"
+            },
+            {
+              "name": "FILTER + UNIQUE",
+              "formula": "=UNIQUE(FILTER(B:B, A:A=\"Toshkent\"))",
+              "description": "Toshkentdan kelgan unique mahsulotlar"
+            },
+            {
+              "name": "SEQUENCE (sana)",
+              "formula": "=SEQUENCE(30,1,TODAY(),1)",
+              "description": "Bugundan 30 kun sanalari"
+            }
+          ],
+          "shortcuts": [
+            { "action": "Spill range tanlash", "keys": "Ctrl + Shift + Space" }
+          ],
+          "examples": [
+            {
+              "title": "Dinamik hisobot",
+              "description": "Toshkentdagi sotuvlarni avtomatik filtrlash",
+              "table": {
+                "headers": ["Shahar", "Mahsulot", "Summa"],
+                "rows": [
+                  ["Toshkent", "Olma", "500000"],
+                  ["Samarqand", "Banan", "300000"],
+                  ["Toshkent", "Apelsin", "200000"],
+                  ["Buxoro", "Olma", "400000"]
+                ]
+              },
+              "formula": "=FILTER(A2:C5, A2:A5=\"Toshkent\")",
+              "result": "Faqat Toshkent qatorlari"
+            }
+          ],
+          "simulator": true,
+          "quiz": {
+            "passingScore": 70,
+            "timeLimit": 6,
+            "questions": [
+              {
+                "question": "Spill nima?",
+                "options": [
+                  "Xato",
+                  "Natijalar avtomatik to'kilishi",
+                  "Formula nomi",
+                  "Hech narsa"
+                ],
+                "correct": 1,
+                "explanation": "Spill — Dynamic Array formulalari natijalarini avtomatik ravishda boshqa kataklarga to'kishi."
+              },
+              {
+                "question": "FILTER da OR sharti qanday yoziladi?",
+                "options": ["AND", "*", "+", "OR"],
+                "correct": 2,
+                "explanation": "+ operatori OR ma'nosida ishlaydi (Array formulasi sifatida)."
+              },
+              {
+                "question": "UNIQUE qaysi versiyadan?",
+                "options": ["Excel 2010", "Excel 2016", "Excel 365", "Excel 2003"],
+                "correct": 2,
+                "explanation": "UNIQUE va boshqa Dynamic Arrays — Microsoft 365 dan boshlab."
+              },
+              {
+                "question": "D1# nimani anglatadi?",
+                "options": [
+                  "D1 katak",
+                  "D1 dan boshlanadigan spill range",
+                  "D ustun",
+                  "Xato"
+                ],
+                "correct": 1,
+                "explanation": "# operatori D1 da boshlanadigan spill diapazoniga murojaat qiladi."
+              }
+            ]
+          }
+        },
+        {
+          "id": "lesson-5",
+          "title": "Order Management",
+          "day": 5,
+          "duration": "75 min",
+          "description": "Buyurtmalar boshqaruvi tizimini Excel'da yaratish",
+          "topics": [
+            "Order tracking jadval tuzilishi",
+            "Mahsulot katalogi va narxlar",
+            "Avtomatik hisob-faktura",
+            "Status tracking (Pending, Done, Cancelled)",
+            "Order summary dashboard"
+          ],
+          "content": [
+            {
+              "type": "heading",
+              "level": 2,
+              "text": "Order Management tizimi"
+            },
+            {
+              "type": "paragraph",
+              "text": "Order Management — buyurtmalarni qabul qilish, kuzatish va boshqarish jarayoni. Excel'da bunday tizimni yaratish biznes uchun juda foydali."
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Tizim tarkibi"
+            },
+            {
+              "type": "list",
+              "items": [
+                "📋 <strong>Orders</strong> — Buyurtmalar ro'yxati",
+                "📦 <strong>Products</strong> — Mahsulotlar katalogi",
+                "👥 <strong>Customers</strong> — Mijozlar bazasi",
+                "📊 <strong>Dashboard</strong> — Umumiy ko'rsatkichlar",
+                "🧾 <strong>Invoice</strong> — Avtomatik hisob-faktura"
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Orders jadvali tuzilishi"
+            },
+            {
+              "type": "code",
+              "code": "A: Order ID    (avtomatik: ORD-001, ORD-002...)\nB: Sana       (TODAY() yoki manual)\nC: Mijoz      (Customers ro'yxatidan dropdown)\nD: Mahsulot   (Products ro'yxatidan dropdown)\nE: Soni       (manual)\nF: Narxi      (avtomatik: VLOOKUP)\nG: Summa      (avtomatik: E*F)\nH: Status     (Pending/Done/Cancelled)\nI: Izoh       (qo'shimcha)"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Avtomatik formulalar"
+            },
+            {
+              "type": "code",
+              "code": "Order ID avtomatik:\n=\"ORD-\" & TEXT(ROW()-1, \"000\")\n\nNarxi (mahsulot katalogidan):\n=IFERROR(VLOOKUP(D2, Products!A:B, 2, FALSE), 0)\n\nSumma:\n=E2*F2\n\nMijoz ma'lumotlari:\n=VLOOKUP(C2, Customers!A:D, 2, FALSE)  ← Telefon\n=VLOOKUP(C2, Customers!A:D, 3, FALSE)  ← Manzil"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Status tracking"
+            },
+            {
+              "type": "code",
+              "code": "Status uchun Data Validation:\n  Pending / In Progress / Done / Cancelled\n\nConditional Formatting:\n  Pending  → Sariq\n  Done     → Yashil\n  Cancelled → Qizil\n\nStatus bo'yicha hisoblash:\n=COUNTIF(H:H, \"Done\")     ← Tugallangan\n=SUMIFS(G:G, H:H, \"Done\") ← Tugallanganlar summasi"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Order Summary"
+            },
+            {
+              "type": "code",
+              "code": "Jami buyurtmalar:    =COUNTA(A2:A1000)-1\nJami summa:          =SUM(G:G)\nO'rtacha buyurtma:   =AVERAGE(G2:G1000)\n\nBugungi buyurtmalar: =COUNTIFS(B:B, TODAY())\nBu oylik summa:      =SUMIFS(G:G, B:B, \">=\"&EOMONTH(TODAY(),-1)+1)\n\nEng ko'p sotilgan:\n=INDEX(D:D, MATCH(MAX(COUNTIF(D:D,D:D)), COUNTIF(D:D,D:D), 0))"
+            }
+          ],
+          "shortcuts": [
+            { "action": "Data Validation", "keys": "Alt + D + L" },
+            { "action": "Bugungi sana", "keys": "Ctrl + ;" },
+            { "action": "Joriy vaqt", "keys": "Ctrl + Shift + ;" },
+            { "action": "Conditional Formatting", "keys": "Alt + O + D" }
+          ],
+          "examples": [
+            {
+              "title": "Order Tracking jadvali",
+              "description": "Buyurtmalar misoli",
+              "table": {
+                "headers": ["Order ID", "Mijoz", "Mahsulot", "Soni", "Summa", "Status"],
+                "rows": [
+                  ["ORD-001", "Ali", "Olma", "10", "50000", "Done"],
+                  ["ORD-002", "Vali", "Banan", "20", "60000", "Pending"],
+                  ["ORD-003", "Gulnora", "Apelsin", "15", "67500", "Done"],
+                  ["ORD-004", "Sardor", "Anor", "5", "40000", "Cancelled"]
+                ]
+              }
+            }
+          ],
+          "simulator": true,
+          "simulatorData": {
+            "A1": "Order ID", "B1": "Mijoz", "C1": "Mahsulot", "D1": "Soni", "E1": "Summa", "F1": "Status",
+            "A2": "ORD-001", "B2": "Ali", "C2": "Olma", "D2": "10", "E2": "50000", "F2": "Done",
+            "A3": "ORD-002", "B3": "Vali", "C3": "Banan", "D3": "20", "E3": "60000", "F3": "Pending",
+            "A4": "ORD-003", "B4": "Gulnora", "C4": "Apelsin", "D4": "15", "E4": "67500", "F4": "Done"
+          },
+          "quiz": {
+            "passingScore": 70,
+            "timeLimit": 5,
+            "questions": [
+              {
+                "question": "Order ID ni avtomatik yaratish uchun?",
+                "options": [
+                  "=ROW()",
+                  "=\"ORD-\" & TEXT(ROW()-1, \"000\")",
+                  "=COUNTA(A:A)",
+                  "Hammasi"
+                ],
+                "correct": 1,
+                "explanation": "TEXT funksiyasi bilan format berib, ROW dan foydalanish eng yaxshi yo'l."
+              },
+              {
+                "question": "Status uchun dropdown qanday qilinadi?",
+                "options": [
+                  "Formula bilan",
+                  "Data Validation",
+                  "Filter",
+                  "Conditional Format"
+                ],
+                "correct": 1,
+                "explanation": "Data Validation → List orqali dropdown menyu yaratiladi."
+              },
+              {
+                "question": "Conditional Formatting nima uchun?",
+                "options": [
+                  "Hisoblash",
+                  "Kataklarni rang bilan ajratish",
+                  "Saqlash",
+                  "Chop etish"
+                ],
+                "correct": 1,
+                "explanation": "Conditional Formatting shart asosida kataklarni rang/format bilan ajratadi."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pro-mod-3",
+      "title": "Data Processing va Dashboard PRO",
+      "lessons": [
+        {
+          "id": "lesson-6",
+          "title": "Project Data Processing",
+          "day": 6,
+          "duration": "70 min",
+          "description": "Katta hajmdagi ma'lumotlarni samarali qayta ishlash",
+          "topics": [
+            "Power Query asoslari",
+            "Ma'lumotlarni tozalash",
+            "Get & Transform",
+            "Bir nechta fayldan ma'lumot olish",
+            "Avtomatik yangilanadigan hisobotlar"
+          ],
+          "content": [
+            {
+              "type": "heading",
+              "level": 2,
+              "text": "Power Query - Ma'lumot bilan ishlash"
+            },
+            {
+              "type": "paragraph",
+              "text": "Power Query — Excel'ning kuchli vositasi bo'lib, turli manbalardan ma'lumotlarni olish, tozalash va o'zgartirishga imkon beradi."
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Manbalar"
+            },
+            {
+              "type": "list",
+              "items": [
+                "📁 <strong>Excel fayllari</strong> — boshqa workbooklar",
+                "📄 <strong>CSV/TXT</strong> — text fayllar",
+                "🌐 <strong>Web</strong> — veb sahifalar",
+                "💾 <strong>Database</strong> — SQL, Access",
+                "📂 <strong>Folder</strong> — papkadagi barcha fayllar",
+                "☁️ <strong>Cloud</strong> — SharePoint, OneDrive"
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Asosiy amallar"
+            },
+            {
+              "type": "list",
+              "items": [
+                "✂️ <strong>Remove Columns</strong> — Keraksiz ustunlarni o'chirish",
+                "🔍 <strong>Filter Rows</strong> — Qatorlarni filtrlash",
+                "🔄 <strong>Replace Values</strong> — Qiymatlarni almashtirish",
+                "📅 <strong>Date Operations</strong> — Sana o'zgartirish",
+                "📊 <strong>Group By</strong> — Guruhlash",
+                "🔗 <strong>Merge Queries</strong> — Birlashtirish (JOIN)",
+                "🔀 <strong>Append Queries</strong> — Pastdan qo'shish (UNION)"
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Refresh - Avtomatik yangilash"
+            },
+            {
+              "type": "code",
+              "code": "Power Query yaratganingizdan keyin:\n\n• Asosiy fayl o'zgarsa - Refresh tugma\n• Avtomatik refresh - Connection Properties\n• Har necha daqiqada yangilanadi\n• Fayl ochilganda yangilash\n\nShortcut: Alt + F5 (joriy query)\n         Ctrl + Alt + F5 (hammasi)"
+            },
+            {
+              "type": "note",
+              "text": "Power Query bilan 1 marotaba sozlangan jarayon avtomatik takrorlanadi. Bu vaqtni juda tejaydi!"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Ma'lumot tozalash misoli"
+            },
+            {
+              "type": "code",
+              "code": "Boshlang'ich:\n  ' Ali ', '25', '01-Yan-2025'\n  'Vali','30','15.02.2025'\n  '  Gulnora','28', '2025/03/20'\n\nTozalashdan keyin:\n  Ali, 25, 01/01/2025\n  Vali, 30, 15/02/2025\n  Gulnora, 28, 20/03/2025\n\nAmallar:\n  1. Trim (probellarni olib tashlash)\n  2. Text → Number\n  3. Sana formatini unifikatsiya"
+            }
+          ],
+          "shortcuts": [
+            { "action": "Power Query ochish", "keys": "Alt + D + Q + Q" },
+            { "action": "Refresh All", "keys": "Ctrl + Alt + F5" },
+            { "action": "Refresh joriy", "keys": "Alt + F5" }
+          ],
+          "examples": [
+            {
+              "title": "Hisobot avtomatlashtirish",
+              "description": "Har oyda yangi fayl qo'shilganda hisobot avtomatik yangilanadi",
+              "table": {
+                "headers": ["Oy", "Fayl", "Holat"],
+                "rows": [
+                  ["Yanvar", "Sales_01.xlsx", "✅ Yuklangan"],
+                  ["Fevral", "Sales_02.xlsx", "✅ Yuklangan"],
+                  ["Mart", "Sales_03.xlsx", "✅ Yuklangan"],
+                  ["Aprel", "(yangi qo'shsangiz)", "⏳ Kutmoqda"]
+                ]
+              }
+            }
+          ],
+          "simulator": true,
+          "quiz": {
+            "passingScore": 70,
+            "timeLimit": 5,
+            "questions": [
+              {
+                "question": "Power Query qaerda joylashgan?",
+                "options": [
+                  "Insert tab",
+                  "Data tab → Get Data",
+                  "Formulas tab",
+                  "View tab"
+                ],
+                "correct": 1,
+                "explanation": "Power Query — Data tab ostida 'Get & Transform Data' bo'limida."
+              },
+              {
+                "question": "Bir nechta fayldan ma'lumot olish uchun?",
+                "options": [
+                  "Get Data → From File → From Folder",
+                  "Manual qo'shish",
+                  "Copy-paste",
+                  "VLOOKUP"
+                ],
+                "correct": 0,
+                "explanation": "From Folder — papkadagi barcha fayllarni avtomatik birlashtiradi."
+              },
+              {
+                "question": "Merge va Append farqi?",
+                "options": [
+                  "Bir xil",
+                  "Merge - yon-yonga (JOIN), Append - pastdan (UNION)",
+                  "Merge - tezroq",
+                  "Append - faqat raqamlar"
+                ],
+                "correct": 1,
+                "explanation": "Merge — ustunlarni qo'shadi (JOIN), Append — qatorlarni qo'shadi (UNION)."
+              }
+            ]
+          }
+        },
+        {
+          "id": "lesson-7",
+          "title": "Dashboard PRO",
+          "day": 7,
+          "duration": "90 min",
+          "description": "Professional, interaktiv Dashboard yaratish",
+          "topics": [
+            "Dashboard arxitekturasi",
+            "KPI cards va sparklines",
+            "Advanced charts (waterfall, treemap, etc.)",
+            "Slicers va timeline",
+            "Form Controls (button, dropdown)"
+          ],
+          "content": [
+            {
+              "type": "heading",
+              "level": 2,
+              "text": "Professional Dashboard"
+            },
+            {
+              "type": "paragraph",
+              "text": "Professional Dashboard — bu nafaqat chiroyli, balki funktsional, tez ishlaydigan va aniq xulosalar beradigan vosita."
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Dashboard arxitekturasi (3 qatlam)"
+            },
+            {
+              "type": "list",
+              "items": [
+                "📥 <strong>Data Layer</strong> — Xom ma'lumot (alohida sheet)",
+                "⚙️ <strong>Calculation Layer</strong> — Hisob-kitoblar (Pivot, formulalar)",
+                "👁️ <strong>Presentation Layer</strong> — Dashboard (Charts, KPI)"
+              ]
+            },
+            {
+              "type": "warning",
+              "text": "Hech qachon Dashboard sheetda asosiy ma'lumotni saqlamang! Alohida 'Data' sheet yarating."
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "KPI Cards yaratish"
+            },
+            {
+              "type": "code",
+              "code": "1. Katakni katta qiling (merge cells)\n2. Katta font ishlatang (24-48pt)\n3. Asosiy raqam yuqori\n4. Qisqa label pastida\n5. Trend ikoncha (↑↓) yoki rangli matn\n\nMisol:\n  💰 12.5M UZS\n  Jami sotuv ↑ 15%"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Sparklines - mini grafiklar"
+            },
+            {
+              "type": "code",
+              "code": "Insert → Sparklines:\n  • Line — chiziqli trend\n  • Column — ustunli\n  • Win/Loss — yutuq/yo'qotish\n\nKatak ichida ishlaydi (joy kam, ma'lumot ko'p)\nO'lcham: 1 katak, 1 satr"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Slicers - vizual filter"
+            },
+            {
+              "type": "code",
+              "code": "PivotTable Analyze → Insert Slicer\n\n• Bir nechta Pivot ga ulaymiz\n• Mouse bilan tanlaymiz\n• Bir nechta Slicer = AND mantiqi\n• Kunlik filter uchun Timeline\n\nDashboard interaktivligi 100%"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Form Controls"
+            },
+            {
+              "type": "list",
+              "items": [
+                "🔘 <strong>Buttons</strong> — Bosish bilan amal",
+                "📋 <strong>Combo Box</strong> — Dropdown menyu",
+                "✅ <strong>Check Box</strong> — Belgilash",
+                "🎚️ <strong>Scroll Bar</strong> — Slayder",
+                "🔁 <strong>Spin Button</strong> — +/- tugma"
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Dashboard dizayni"
+            },
+            {
+              "type": "list",
+              "items": [
+                "🎨 <strong>Rang sxemasi</strong> — Brend ranglariga mos",
+                "📐 <strong>Grid</strong> — Hammasi tekis",
+                "📏 <strong>Spacing</strong> — Elementlar orasida bo'shliq",
+                "🔤 <strong>Font</strong> — 1-2 ta font (Calibri, Segoe UI)",
+                "🎯 <strong>Hierarchy</strong> — Asosiysi yuqori va katta",
+                "❌ Gridlines → o'chiring",
+                "❌ Headings → o'chiring (View tab)"
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Yaxshi dashboard - 5 sekundda asosiy xulosani bera oladigan dashboard."
+            }
+          ],
+          "shortcuts": [
+            { "action": "Sparkline qo'shish", "keys": "Alt + N + S + L" },
+            { "action": "Slicer qo'shish", "keys": "Alt + JT + SF" },
+            { "action": "Gridlines o'chirish", "keys": "View tab → uncheck Gridlines" },
+            { "action": "Freeze Panes", "keys": "Alt + W + F + F" }
+          ],
+          "examples": [
+            {
+              "title": "Sales Dashboard tarkibi",
+              "description": "Professional dashboard misoli",
+              "table": {
+                "headers": ["Element", "Joylashuv", "O'lcham"],
+                "rows": [
+                  ["Logo + Sarlavha", "Top", "Width: 100%"],
+                  ["KPI Cards (3-4 ta)", "Yuqori qator", "1/3 keng"],
+                  ["Slicer (Filter)", "Chap panel", "200px"],
+                  ["Main Chart", "O'rta", "Katta"],
+                  ["Mini Charts (2)", "O'ng yon", "Kichik"],
+                  ["Trend table", "Pastki", "Width: 100%"]
+                ]
+              }
+            }
+          ],
+          "simulator": true,
+          "quiz": {
+            "passingScore": 70,
+            "timeLimit": 6,
+            "questions": [
+              {
+                "question": "Dashboard nechta qatlamdan iborat?",
+                "options": ["1", "2", "3", "5"],
+                "correct": 2,
+                "explanation": "Data → Calculation → Presentation — 3 qatlam."
+              },
+              {
+                "question": "Sparkline qayerda joylashadi?",
+                "options": [
+                  "Alohida sheetda",
+                  "Bitta katak ichida",
+                  "Chart sifatida",
+                  "Pivot da"
+                ],
+                "correct": 1,
+                "explanation": "Sparkline — katak ichidagi mini grafik."
+              },
+              {
+                "question": "Bir nechta Pivot ga bitta Slicer qanday ulanadi?",
+                "options": [
+                  "Hech qanday yo'l yo'q",
+                  "Right-click → Report Connections",
+                  "Yangi Slicer kerak",
+                  "Faqat formula bilan"
+                ],
+                "correct": 1,
+                "explanation": "Slicer-ga right-click → Report Connections orqali bir nechta Pivot ga ulanadi."
+              },
+              {
+                "question": "Yaxshi dashboard nechta rangdan iborat?",
+                "options": ["1-2", "3-4", "5-7", "10+"],
+                "correct": 1,
+                "explanation": "Professional dashboard 3-4 ta asosiy rangdan iborat bo'ladi."
+              }
+            ]
+          }
+        },
+        {
+          "id": "lesson-8",
+          "title": "Interactive Dashboard",
+          "day": 8,
+          "duration": "85 min",
+          "description": "Tugmalar, dropdownlar va interaktiv elementlar bilan dashboard",
+          "topics": [
+            "Form Controls bilan ishlash",
+            "Dynamic Charts (formula bilan o'zgaradi)",
+            "Scenario Manager",
+            "What-If Analysis",
+            "Drill-down funksiyalari"
+          ],
+          "content": [
+            {
+              "type": "heading",
+              "level": 2,
+              "text": "Interactive Dashboard"
+            },
+            {
+              "type": "paragraph",
+              "text": "Foydalanuvchi tugmalarni bosib, dropdownlarni o'zgartirib, dashboardni o'zi sozlay oladigan dashboard."
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Form Controls qanday ishlatiladi"
+            },
+            {
+              "type": "list",
+              "items": [
+                "1. Developer tab → Insert → Form Controls",
+                "2. Kontrolni chizing (Combo Box, Button)",
+                "3. Right-click → Format Control",
+                "4. Cell Link belgilang",
+                "5. Formuladan foydalaning"
+              ]
+            },
+            {
+              "type": "note",
+              "text": "Developer tab ko'rinmasa: File → Options → Customize Ribbon → Developer ni belgilang."
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Combo Box (Dropdown)"
+            },
+            {
+              "type": "code",
+              "code": "Misol:\n  Combo Box ulangan A1 ga\n  Ro'yxat: 'Olma', 'Banan', 'Apelsin'\n  Tanlanganda A1 da raqam paydo bo'ladi (1, 2, 3)\n\nFormula:\n  =INDEX({\"Olma\",\"Banan\",\"Apelsin\"}, A1)\n  =CHOOSE(A1, SUM(B:B), AVERAGE(B:B), MAX(B:B))"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Dynamic Charts"
+            },
+            {
+              "type": "code",
+              "code": "Combo Box → Cell Link: A1\n\nChart data:\n  Yordamchi diapazon (D1:D10):\n  =CHOOSE($A$1, B1, C1, D1)\n\nNatija: Combo Box o'zgarsa, chart ham o'zgaradi!"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "What-If Analysis"
+            },
+            {
+              "type": "list",
+              "items": [
+                "🎯 <strong>Goal Seek</strong> — Maqsadli qiymatga erishish",
+                "📊 <strong>Data Table</strong> — Bir nechta variant",
+                "🔄 <strong>Scenario Manager</strong> — Stsenariylar saqlash",
+                "🔍 <strong>Solver</strong> — Murakkab optimizatsiya"
+              ]
+            },
+            {
+              "type": "code",
+              "code": "Goal Seek misoli:\n  A1: Sotuv = 1000\n  A2: Narx = ?\n  A3: Daromad = A1 * A2\n\n  Vazifa: Daromad = 50000 bo'lishi uchun Narx qancha?\n  Data → What-If → Goal Seek:\n    Set cell: A3\n    To value: 50000\n    By changing: A2\n\n  Natija: A2 = 50 (Excel o'zi topadi)"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Scenario Manager"
+            },
+            {
+              "type": "code",
+              "code": "3 ta stsenariy saqlash mumkin:\n\n📉 Yomon stsenariy:\n  Sotuv: 1000, Narx: 30, Bonus: 5%\n\n➡️ Realistik:\n  Sotuv: 1500, Narx: 35, Bonus: 7%\n\n📈 Yaxshi:\n  Sotuv: 2500, Narx: 40, Bonus: 10%\n\nTugmani bosib bittadan ko'rsatish mumkin"
+            }
+          ],
+          "shortcuts": [
+            { "action": "Developer tab", "keys": "Alt + L" },
+            { "action": "Goal Seek", "keys": "Alt + W + G" },
+            { "action": "Scenario Manager", "keys": "Alt + W + S" }
+          ],
+          "examples": [
+            {
+              "title": "Interactive Sales Dashboard",
+              "description": "Combo Box bilan oyni tanlash",
+              "table": {
+                "headers": ["Oy", "Sotuv", "Mijoz", "O'sish"],
+                "rows": [
+                  ["Yanvar", "12M", "245", "+8%"],
+                  ["Fevral", "14M", "289", "+12%"],
+                  ["Mart", "11M", "234", "-5%"],
+                  ["Aprel", "16M", "312", "+18%"]
+                ]
+              }
+            }
+          ],
+          "simulator": true,
+          "quiz": {
+            "passingScore": 70,
+            "timeLimit": 6,
+            "questions": [
+              {
+                "question": "Developer tab qanday yoqiladi?",
+                "options": [
+                  "Avtomatik yoqilgan",
+                  "File → Options → Customize Ribbon",
+                  "Hech qanday yo'l yo'q",
+                  "Add-In orqali"
+                ],
+                "correct": 1,
+                "explanation": "Developer tab — File → Options → Customize Ribbon → Developer."
+              },
+              {
+                "question": "Goal Seek nima qiladi?",
+                "options": [
+                  "Saqlash",
+                  "Maqsadli qiymatga erishish uchun input topadi",
+                  "Filter",
+                  "Chart yaratadi"
+                ],
+                "correct": 1,
+                "explanation": "Goal Seek — natija ma'lum, input topish uchun."
+              },
+              {
+                "question": "Combo Box natijasi nima?",
+                "options": [
+                  "Matn",
+                  "Raqam (tanlangan elementning indeksi)",
+                  "Mantiqiy",
+                  "Sana"
+                ],
+                "correct": 1,
+                "explanation": "Combo Box tanlanganda Cell Link ga raqam yozadi (1, 2, 3...)."
+              },
+              {
+                "question": "Bir nechta stsenariy saqlash uchun?",
+                "options": [
+                  "Save As",
+                  "Scenario Manager",
+                  "Filter",
+                  "Pivot"
+                ],
+                "correct": 1,
+                "explanation": "Scenario Manager — bir nechta variantni saqlab, almashtirib turish uchun."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pro-mod-4",
+      "title": "Automation va VBA",
+      "lessons": [
+        {
+          "id": "lesson-9",
+          "title": "ChatGPT + Excel Automation",
+          "day": 9,
+          "duration": "60 min",
+          "description": "Sun'iy intellekt bilan Excel ishlarini avtomatlashtirish",
+          "topics": [
+            "ChatGPT bilan formula yozish",
+            "VBA kod generatsiya qildirish",
+            "Ma'lumot tahlilini AI ga qildirib olish",
+            "Excel + ChatGPT Plugin",
+            "Prompt engineering for Excel"
+          ],
+          "content": [
+            {
+              "type": "heading",
+              "level": 2,
+              "text": "AI yordamida Excel ishlari"
+            },
+            {
+              "type": "paragraph",
+              "text": "ChatGPT — Excel'da formula yozish, VBA kod yaratish va ma'lumot tahlilini juda tezlashtiradi. To'g'ri prompt yozsangiz, soatlik ishni daqiqada bajaring."
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Formula yozdirish"
+            },
+            {
+              "type": "code",
+              "code": "Yomon prompt:\n  \"Excel formula\"\n\n✅ Yaxshi prompt:\n  \"Excel formulasi yozing:\n   - A ustunda mahsulot nomi\n   - B ustunda summa\n   - C ustunda sana\n   - Bugundan boshlab oxirgi 7 kunlik\n     'Olma' uchun jami summa kerak\"\n\nNatija:\n  =SUMIFS(B:B, A:A, \"Olma\", C:C, \">=\"&TODAY()-7)"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "VBA kod yozdirish"
+            },
+            {
+              "type": "code",
+              "code": "Prompt:\n  \"VBA kod yozing:\n   - Aktiv sheetda A ustundagi takrorlanmas qiymatlarni\n     yangi sheetga ko'chirish\n   - Yangi sheet nomi: 'Unique_Data'\n   - Agar sheet mavjud bo'lsa, qayta yaratish\"\n\nChatGPT VBA kod yozib beradi va izoh qiladi."
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Ma'lumot tahlili"
+            },
+            {
+              "type": "code",
+              "code": "1. Excel ma'lumotni CSV qilib eksport qiling\n2. ChatGPT ga yuklang (yoki ko'chirib qo'ying)\n3. So'rang:\n\n   \"Bu sotuv ma'lumotlarini tahlil qiling:\n    - Top 5 mahsulot\n    - Eng sotiluvchan oy\n    - Trend qaysi tomonga\n    - Tavsiyalar bering\"\n\n4. AI tahlil va xulosa beradi"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Eng yaxshi promptlar"
+            },
+            {
+              "type": "list",
+              "items": [
+                "✅ <strong>Aniq vazifa</strong> bering",
+                "✅ <strong>Ma'lumot strukturasini</strong> tasvirlang",
+                "✅ <strong>Kutilayotgan natijani</strong> ko'rsating",
+                "✅ <strong>Misol</strong> bering (kerak bo'lsa)",
+                "✅ <strong>Excel versiyasini</strong> ayting (365, 2019)",
+                "❌ Juda qisqa va noaniq prompt"
+              ]
+            },
+            {
+              "type": "note",
+              "text": "ChatGPT bilan yaxshi promptlar yozish — bu yangi skill. Vaqt sarflab o'rganishga arziydi."
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Foydali AI vositalar"
+            },
+            {
+              "type": "list",
+              "items": [
+                "🤖 <strong>ChatGPT</strong> — Universal yordamchi",
+                "🔍 <strong>Excel Formula Bot</strong> — Maxsus formula uchun",
+                "📊 <strong>Copilot</strong> — Microsoft 365 da inson AI",
+                "🎯 <strong>Claude</strong> — Murakkab tahlil",
+                "💡 <strong>Notion AI</strong> — Hisobot yozish"
+              ]
+            }
+          ],
+          "shortcuts": [],
+          "examples": [
+            {
+              "title": "Real misol",
+              "description": "ChatGPT ga bergan prompt",
+              "table": {
+                "headers": ["Vazifa", "Vaqt (qo'l bilan)", "Vaqt (AI bilan)"],
+                "rows": [
+                  ["Murakkab formula yozish", "30 min", "2 min"],
+                  ["VBA kod yaratish", "2 soat", "10 min"],
+                  ["1000 qatorli tahlil", "1 soat", "5 min"],
+                  ["Dashboard rejasini chizish", "45 min", "5 min"]
+                ]
+              }
+            }
+          ],
+          "simulator": true,
+          "quiz": {
+            "passingScore": 70,
+            "timeLimit": 5,
+            "questions": [
+              {
+                "question": "Yaxshi prompt qanday bo'ladi?",
+                "options": [
+                  "Qisqa va umumiy",
+                  "Aniq va kontekst bilan",
+                  "Faqat 1 so'z",
+                  "Texnik terminlar bilan"
+                ],
+                "correct": 1,
+                "explanation": "Yaxshi prompt — aniq vazifa, ma'lumot strukturasi, kutilayotgan natija."
+              },
+              {
+                "question": "ChatGPT VBA kod yoza oladimi?",
+                "options": [
+                  "Yo'q",
+                  "Ha, va izohlaydi",
+                  "Faqat formula",
+                  "Faqat HTML"
+                ],
+                "correct": 1,
+                "explanation": "ChatGPT VBA, Python, JavaScript va boshqa tillarda yoza oladi."
+              },
+              {
+                "question": "Copilot nima?",
+                "options": [
+                  "Excel funksiya",
+                  "Microsoft 365 dagi AI",
+                  "Plugin",
+                  "Add-in"
+                ],
+                "correct": 1,
+                "explanation": "Copilot — Microsoft 365 ga integratsiyalashgan AI yordamchi."
+              }
+            ]
+          }
+        },
+        {
+          "id": "lesson-10",
+          "title": "VBA Basics",
+          "day": 10,
+          "duration": "90 min",
+          "description": "Visual Basic for Applications — Excel'ni dasturlash",
+          "topics": [
+            "VBA nima va qachon kerak",
+            "VBA Editor (Alt + F11)",
+            "Macros yaratish va saqlash",
+            "Asosiy VBA sintaksisi",
+            "Birinchi VBA dasturlar"
+          ],
+          "content": [
+            {
+              "type": "heading",
+              "level": 2,
+              "text": "VBA - Visual Basic for Applications"
+            },
+            {
+              "type": "paragraph",
+              "text": "VBA — Microsoft Office dasturlarini avtomatlashtirish uchun mo'ljallangan dasturlash tili. U bilan Excel'da har qanday narsani qilish mumkin."
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "VBA nima uchun?"
+            },
+            {
+              "type": "list",
+              "items": [
+                "🔄 <strong>Takrorlanuvchi ishlarni</strong> avtomatlashtirish",
+                "📊 <strong>Custom hisobotlar</strong> yaratish",
+                "🤖 <strong>Murakkab logika</strong> formuladan tashqari",
+                "📁 <strong>Bir nechta fayl</strong> bilan ishlash",
+                "📧 <strong>Email yuborish</strong> Outlook orqali",
+                "🌐 <strong>Web scraping</strong>"
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "VBA Editor (VBE)"
+            },
+            {
+              "type": "code",
+              "code": "Ochish: Alt + F11\n\nTuzilishi:\n  📁 Project Explorer (chap)\n     ├── Sheet1\n     ├── Sheet2\n     ├── ThisWorkbook\n     └── Modules\n         └── Module1 ← Kod shu yerda\n\n  📝 Code Window (o'rta) — kod yozish\n  🔍 Properties (pastki chap) — sozlamalar\n  ⚠️ Immediate Window (Ctrl+G) — debug"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Birinchi Macros"
+            },
+            {
+              "type": "code",
+              "code": "Sub HelloWorld()\n    MsgBox \"Salom, Excel!\"\nEnd Sub\n\n' Ishga tushirish: F5\n' Yoki Excelda: Alt+F8 → tanlash → Run"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Asosiy obyektlar"
+            },
+            {
+              "type": "code",
+              "code": "Range(\"A1\").Value = 100\n  → A1 ga 100 yozish\n\nRange(\"A1:A10\").Value = \"Excel\"\n  → A1:A10 ga 'Excel' yozish\n\nCells(1, 1).Value = 50\n  → A1 ga (qator 1, ustun 1)\n\nWorksheets(\"Sheet1\").Range(\"B5\").Value = 200\n  → Sheet1 ning B5 ga\n\nActiveSheet.Name = \"Dashboard\"\n  → Joriy sheet nomini o'zgartirish"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "If, For, Variables"
+            },
+            {
+              "type": "code",
+              "code": "Sub Misol()\n    Dim i As Integer\n    Dim total As Double\n    \n    total = 0\n    \n    For i = 1 To 10\n        total = total + Cells(i, 1).Value\n    Next i\n    \n    If total > 1000 Then\n        MsgBox \"Ko'p: \" & total\n    Else\n        MsgBox \"Kam: \" & total\n    End If\nEnd Sub"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Macros saqlash"
+            },
+            {
+              "type": "warning",
+              "text": "Macros saqlash uchun faylni .xlsm (Macro-Enabled Workbook) sifatida saqlang. Oddiy .xlsx makrosga ruxsat bermaydi!"
+            }
+          ],
+          "shortcuts": [
+            { "action": "VBA Editor ochish", "keys": "Alt + F11" },
+            { "action": "Macros dialog", "keys": "Alt + F8" },
+            { "action": "Macro Record", "keys": "Alt + T + M + R" },
+            { "action": "Immediate Window", "keys": "Ctrl + G (VBE da)" },
+            { "action": "Run macro", "keys": "F5 (VBE da)" },
+            { "action": "Step Into (debug)", "keys": "F8" }
+          ],
+          "examples": [
+            {
+              "title": "Foydali VBA kodlar",
+              "description": "Tezda nusxa olib ishlatish mumkin",
+              "table": {
+                "headers": ["Vazifa", "Kod"],
+                "rows": [
+                  ["Hammasini tozalash", "Cells.Clear"],
+                  ["Faqat formatlash", "Cells.ClearFormats"],
+                  ["Sheet nomi", "ActiveSheet.Name = \"Yangi\""],
+                  ["Yangi Sheet", "Worksheets.Add"],
+                  ["Saqlash", "ThisWorkbook.Save"]
+                ]
+              }
+            }
+          ],
+          "simulator": true,
+          "quiz": {
+            "passingScore": 70,
+            "timeLimit": 7,
+            "questions": [
+              {
+                "question": "VBA Editor qanday ochiladi?",
+                "options": ["F11", "Alt + F11", "Ctrl + F11", "Shift + F11"],
+                "correct": 1,
+                "explanation": "Alt + F11 — VBA Editor (VBE) ni ochish uchun."
+              },
+              {
+                "question": "Macros qanday formatda saqlanishi kerak?",
+                "options": [".xlsx", ".xls", ".xlsm", ".csv"],
+                "correct": 2,
+                "explanation": ".xlsm — Macro-Enabled Workbook. .xlsx makrosni saqlamaydi."
+              },
+              {
+                "question": "Range(\"A1\").Value = 100 nima qiladi?",
+                "options": [
+                  "A1 ni o'qiydi",
+                  "A1 ga 100 yozadi",
+                  "A1 ni o'chiradi",
+                  "Xato"
+                ],
+                "correct": 1,
+                "explanation": "Range obyekti .Value xususiyati orqali katakka qiymat yozadi."
+              },
+              {
+                "question": "VBA da takrorlanish (loop) uchun?",
+                "options": ["If", "For", "Sub", "Dim"],
+                "correct": 1,
+                "explanation": "For loop — takrorlanuvchi amallar uchun (For ... Next)."
+              },
+              {
+                "question": "MsgBox nima qiladi?",
+                "options": [
+                  "Saqlaydi",
+                  "Xabar oynasini chiqaradi",
+                  "Formula",
+                  "Filter"
+                ],
+                "correct": 1,
+                "explanation": "MsgBox — foydalanuvchiga ko'rinadigan dialog oyna."
+              }
+            ]
+          }
+        },
+        {
+          "id": "lesson-11",
+          "title": "Automated Reports",
+          "day": 11,
+          "duration": "80 min",
+          "description": "VBA bilan to'liq avtomatik hisobotlar tayyorlash",
+          "topics": [
+            "Hisobot strukturasini rejalashtirish",
+            "Ma'lumotni avtomatik yig'ish",
+            "Pivot Table VBA orqali",
+            "Chart yaratish VBA bilan",
+            "Email orqali yuborish (Outlook)"
+          ],
+          "content": [
+            {
+              "type": "heading",
+              "level": 2,
+              "text": "Avtomatik hisobot tizimi"
+            },
+            {
+              "type": "paragraph",
+              "text": "Bir marta yozilgan VBA kod har kuni, har hafta yoki har oyda avtomatik hisobot tayyorlay oladi."
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Hisobot bosqichlari"
+            },
+            {
+              "type": "list",
+              "items": [
+                "1. <strong>Ma'lumot yig'ish</strong> — Bir nechta sheet/fayldan",
+                "2. <strong>Tozalash</strong> — Keraksiz qatorlar, NULL",
+                "3. <strong>Hisob-kitob</strong> — Formula, Pivot",
+                "4. <strong>Vizualizatsiya</strong> — Chart, jadval",
+                "5. <strong>Format</strong> — Rang, font, border",
+                "6. <strong>Eksport</strong> — PDF yoki email"
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Misol: Oylik hisobot"
+            },
+            {
+              "type": "code",
+              "code": "Sub MonthlyReport()\n    Dim wsData As Worksheet\n    Dim wsReport As Worksheet\n    Dim lastRow As Long\n    \n    ' 1. Data sheet ga murojaat\n    Set wsData = Worksheets(\"Data\")\n    lastRow = wsData.Cells(Rows.Count, 1).End(xlUp).Row\n    \n    ' 2. Report sheet ni qayta yaratish\n    On Error Resume Next\n    Worksheets(\"Report\").Delete\n    On Error GoTo 0\n    Set wsReport = Worksheets.Add\n    wsReport.Name = \"Report\"\n    \n    ' 3. Sarlavha\n    wsReport.Range(\"A1\").Value = \"OYLIK HISOBOT - \" & Format(Date, \"mmmm yyyy\")\n    wsReport.Range(\"A1\").Font.Size = 16\n    wsReport.Range(\"A1\").Font.Bold = True\n    \n    ' 4. Asosiy ko'rsatkichlar\n    wsReport.Range(\"A3\").Value = \"Jami sotuv:\"\n    wsReport.Range(\"B3\").Value = WorksheetFunction.Sum(wsData.Range(\"D2:D\" & lastRow))\n    \n    wsReport.Range(\"A4\").Value = \"Mijozlar soni:\"\n    wsReport.Range(\"B4\").Value = WorksheetFunction.CountA(wsData.Range(\"B2:B\" & lastRow))\n    \n    ' 5. Format\n    wsReport.Range(\"B3:B4\").NumberFormat = \"#,##0 UZS\"\n    wsReport.Columns(\"A:B\").AutoFit\n    \n    MsgBox \"Hisobot tayyor!\"\nEnd Sub"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Pivot Table VBA bilan"
+            },
+            {
+              "type": "code",
+              "code": "Sub CreatePivot()\n    Dim ws As Worksheet\n    Dim pc As PivotCache\n    Dim pt As PivotTable\n    \n    Set ws = ActiveSheet\n    \n    ' Pivot Cache\n    Set pc = ActiveWorkbook.PivotCaches.Create( _\n        SourceType:=xlDatabase, _\n        SourceData:=ws.Range(\"A1\").CurrentRegion)\n    \n    ' Pivot Table\n    Set pt = pc.CreatePivotTable( _\n        TableDestination:=ws.Range(\"F1\"), _\n        TableName:=\"MyPivot\")\n    \n    ' Maydonlar\n    pt.PivotFields(\"Mahsulot\").Orientation = xlRowField\n    pt.PivotFields(\"Summa\").Orientation = xlDataField\nEnd Sub"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "PDF eksport"
+            },
+            {
+              "type": "code",
+              "code": "Sub ExportToPDF()\n    Dim filePath As String\n    filePath = ThisWorkbook.Path & \"\\Hisobot_\" & Format(Date, \"yyyy-mm-dd\") & \".pdf\"\n    \n    ActiveSheet.ExportAsFixedFormat _\n        Type:=xlTypePDF, _\n        Filename:=filePath, _\n        Quality:=xlQualityStandard, _\n        IncludeDocProperties:=True\n    \n    MsgBox \"PDF saqlandi: \" & filePath\nEnd Sub"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Email yuborish (Outlook)"
+            },
+            {
+              "type": "code",
+              "code": "Sub SendReport()\n    Dim outlook As Object\n    Dim mail As Object\n    \n    Set outlook = CreateObject(\"Outlook.Application\")\n    Set mail = outlook.CreateItem(0)\n    \n    With mail\n        .To = \"boss@company.uz\"\n        .Subject = \"Oylik hisobot\"\n        .Body = \"Hurmatli rahbar, oylik hisobot ilova qilindi.\"\n        .Attachments.Add ThisWorkbook.FullName\n        .Send\n    End With\n    \n    MsgBox \"Email yuborildi!\"\nEnd Sub"
+            },
+            {
+              "type": "note",
+              "text": "Outlook avtomatik ochilishi va yuborilishi uchun kompyuterda o'rnatilgan va kirgan bo'lishi kerak."
+            }
+          ],
+          "shortcuts": [
+            { "action": "Save as PDF", "keys": "F12 → PDF tanlash" }
+          ],
+          "examples": [
+            {
+              "title": "Avtomatlashtirish samaradorligi",
+              "description": "VBA bilan vaqt tejash",
+              "table": {
+                "headers": ["Ish", "Qo'l bilan", "VBA bilan", "Tejash"],
+                "rows": [
+                  ["Oylik hisobot", "4 soat", "5 daqiqa", "48x"],
+                  ["100 ta email", "3 soat", "2 daqiqa", "90x"],
+                  ["Pivot yaratish", "20 daqiqa", "10 soniya", "120x"],
+                  ["PDF eksport", "15 daqiqa", "5 soniya", "180x"]
+                ]
+              }
+            }
+          ],
+          "simulator": true,
+          "quiz": {
+            "passingScore": 70,
+            "timeLimit": 6,
+            "questions": [
+              {
+                "question": "VBA dan PDF eksport uchun qaysi method?",
+                "options": [
+                  "SaveAs",
+                  "ExportAsFixedFormat",
+                  "Print",
+                  "Convert"
+                ],
+                "correct": 1,
+                "explanation": "ExportAsFixedFormat orqali PDF va boshqa formatlarga eksport qilinadi."
+              },
+              {
+                "question": "Outlook bilan ishlash uchun?",
+                "options": [
+                  "Built-in",
+                  "CreateObject(\"Outlook.Application\")",
+                  "Reference qo'shish",
+                  "B va C ikkalasi"
+                ],
+                "correct": 3,
+                "explanation": "Ikkala usul ham ishlaydi — Late Binding (CreateObject) yoki Early Binding (Reference)."
+              },
+              {
+                "question": "WorksheetFunction nima?",
+                "options": [
+                  "VBA komandasi",
+                  "Excel formulalarini VBA da chaqirish",
+                  "Yangi obyekt",
+                  "Plugin"
+                ],
+                "correct": 1,
+                "explanation": "WorksheetFunction orqali SUM, COUNT, VLOOKUP kabi Excel formulalarni VBA da ishlatish mumkin."
+              }
+            ]
+          }
+        },
+        {
+          "id": "lesson-12",
+          "title": "Final Project & Best Practices",
+          "day": 12,
+          "duration": "120 min",
+          "description": "To'liq avtomatlashtirilgan biznes loyiha yaratish",
+          "topics": [
+            "Loyiha rejalashtirish",
+            "Best practices va kod tozaligi",
+            "Xatolarni boshqarish (Error Handling)",
+            "Foydalanuvchi interfeysi",
+            "Yakuniy loyiha: Mini ERP tizimi"
+          ],
+          "content": [
+            {
+              "type": "heading",
+              "level": 2,
+              "text": "Yakuniy loyiha"
+            },
+            {
+              "type": "paragraph",
+              "text": "Endi siz Excel'da to'liq avtomatlashtirilgan biznes tizim yaratishingiz mumkin! Bu darsda barcha bilimlarni birlashtirib, real loyiha yaratamiz."
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Mini ERP tizimi tarkibi"
+            },
+            {
+              "type": "list",
+              "items": [
+                "🏠 <strong>Dashboard</strong> — Asosiy ko'rsatkichlar",
+                "👥 <strong>Customers</strong> — Mijozlar bazasi",
+                "📦 <strong>Products</strong> — Mahsulot katalogi",
+                "🛒 <strong>Orders</strong> — Buyurtmalar",
+                "📊 <strong>Reports</strong> — Hisobotlar",
+                "⚙️ <strong>Settings</strong> — Sozlamalar",
+                "📧 <strong>Email</strong> — Avtomatik yuborish"
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Best Practices"
+            },
+            {
+              "type": "list",
+              "items": [
+                "✅ <strong>Naming convention</strong> — wsData, rngTotal, intCount",
+                "✅ <strong>Comments</strong> — Har bir Sub uchun izoh",
+                "✅ <strong>Modular code</strong> — Kichik Sub'larga bo'lish",
+                "✅ <strong>Error handling</strong> — On Error Resume Next",
+                "✅ <strong>Variables</strong> — Dim, Option Explicit",
+                "✅ <strong>Performance</strong> — Application.ScreenUpdating = False",
+                "❌ Hard-coded qiymatlar",
+                "❌ GoTo abuse",
+                "❌ Public variables (kerakmas joyda)"
+              ]
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Error Handling"
+            },
+            {
+              "type": "code",
+              "code": "Sub MyMacro()\n    On Error GoTo ErrorHandler\n    \n    ' Asosiy kod\n    Dim x As Double\n    x = 10 / 0  ' Xato!\n    \n    Exit Sub  ' Muhim! ErrorHandler ga o'tmaslik uchun\n    \nErrorHandler:\n    MsgBox \"Xato: \" & Err.Description, vbCritical\n    Debug.Print \"Xato kodi: \" & Err.Number\nEnd Sub"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Performance Tips"
+            },
+            {
+              "type": "code",
+              "code": "Sub FastMacro()\n    ' Boshlanishida:\n    Application.ScreenUpdating = False    ' Ekran yangilanmaydi\n    Application.Calculation = xlManual    ' Formulalar avtomatik hisoblanmaydi\n    Application.EnableEvents = False      ' Eventlar o'chiriladi\n    \n    ' Asosiy kod\n    ' ... katta hajmli ishlar\n    \n    ' Oxirida:\n    Application.ScreenUpdating = True\n    Application.Calculation = xlAutomatic\n    Application.EnableEvents = True\nEnd Sub\n\n→ 10x tezroq ishlaydi!"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "UserForm - Custom interfeys"
+            },
+            {
+              "type": "code",
+              "code": "VBA Editor → Insert → UserForm\n\nO'z formangizni yarating:\n  • Label - matn\n  • TextBox - kiritish\n  • ComboBox - dropdown\n  • CommandButton - tugma\n  • CheckBox - belgi\n\nProperties orqali tashqi ko'rinishni sozlang.\nKod:\n  Private Sub btnSubmit_Click()\n      Cells(1, 1).Value = TextBox1.Value\n      Unload Me\n  End Sub\n  \nKo'rsatish:\n  UserForm1.Show"
+            },
+            {
+              "type": "heading",
+              "level": 3,
+              "text": "Yakuniy loyihangiz"
+            },
+            {
+              "type": "note",
+              "text": "Endi sizning vazifangiz — o'zingizning real biznes muammongiz uchun to'liq Excel yechim yaratish. Bu sizning portfolioingizdagi eng yaxshi loyiha bo'ladi!"
+            },
+            {
+              "type": "list",
+              "items": [
+                "🎯 Real muammoni tanlang",
+                "📝 Texnik vazifani yozing",
+                "🎨 Dashboard dizaynini chizing",
+                "💻 VBA kod yozing",
+                "✅ Test qiling",
+                "📚 Hujjat tayyorlang",
+                "🚀 Foydalaning va yangilab boring!"
+              ]
+            }
+          ],
+          "shortcuts": [
+            { "action": "Code → Procedure ga sakrash", "keys": "Ctrl + Shift + F2" },
+            { "action": "Find/Replace", "keys": "Ctrl + H (VBE da)" },
+            { "action": "Object Browser", "keys": "F2 (VBE da)" }
+          ],
+          "examples": [
+            {
+              "title": "Tabriklaymiz!",
+              "description": "Siz endi Excel PRO bo'ldingiz!",
+              "table": {
+                "headers": ["Siz o'rgandingiz", "Daraja"],
+                "rows": [
+                  ["Excel Interface", "✅ Mukammal"],
+                  ["Formulalar", "✅ PRO"],
+                  ["VLOOKUP/XLOOKUP", "✅ PRO"],
+                  ["Pivot Tables", "✅ PRO"],
+                  ["Dashboards", "✅ PRO"],
+                  ["VBA", "✅ PRO"],
+                  ["AI Automation", "✅ PRO"]
+                ]
+              }
+            }
+          ],
+          "simulator": true,
+          "quiz": {
+            "passingScore": 80,
+            "timeLimit": 10,
+            "questions": [
+              {
+                "question": "VBA da Performance uchun nima o'chiriladi?",
+                "options": [
+                  "ScreenUpdating",
+                  "Calculation",
+                  "Events",
+                  "Hammasi"
+                ],
+                "correct": 3,
+                "explanation": "Tezlik uchun: ScreenUpdating, Calculation, Events - hammasini False yoki Manual qiling."
+              },
+              {
+                "question": "Error Handling uchun qaysi?",
+                "options": [
+                  "Try/Catch",
+                  "On Error GoTo",
+                  "If/Else",
+                  "Hech qanday"
+                ],
+                "correct": 1,
+                "explanation": "VBA da Error Handling — On Error GoTo Label."
+              },
+              {
+                "question": "UserForm nima?",
+                "options": [
+                  "Excel formula",
+                  "Custom dialog box",
+                  "Macro nomi",
+                  "Worksheet"
+                ],
+                "correct": 1,
+                "explanation": "UserForm — o'z interfeys oynangiz (custom dialog)."
+              },
+              {
+                "question": "Naming convention misoli?",
+                "options": [
+                  "x, y, z",
+                  "data1, data2",
+                  "wsData, rngTotal, intCount",
+                  "Hammasi"
+                ],
+                "correct": 2,
+                "explanation": "Prefix bilan ataylash: ws (worksheet), rng (range), int (integer), str (string)."
+              },
+              {
+                "question": "Yakuniy loyihaning eng muhim qismi?",
+                "options": [
+                  "Chiroyli dizayn",
+                  "Real muammoni hal qilish",
+                  "Murakkab kod",
+                  "Ko'p funksiya"
+                ],
+                "correct": 1,
+                "explanation": "Eng yaxshi loyiha — real foydalanuvchi muammosini yechadigan loyiha!"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
