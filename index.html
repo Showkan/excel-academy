@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Academy</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <svg width="64" height="64" viewBox="0 0 64 64">
+                    <rect width="64" height="64" rx="12" fill="#217346"/>
+                    <text x="32" y="42" text-anchor="middle" fill="white" font-size="32" font-weight="bold" font-family="Inter">X</text>
+                </svg>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-bar-fill"></div>
+            </div>
+            <p class="loading-text" data-i18n="loading">Yuklanmoqda...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="app-header" class="header">
+        <div class="header-ribbon">
+            <div class="header-left">
+                <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+                <div class="header-logo" id="nav-home">
+                    <svg width="32" height="32" viewBox="0 0 64 64">
+                        <rect width="64" height="64" rx="12" fill="#217346"/>
+                        <text x="32" y="42" text-anchor="middle" fill="white" font-size="32" font-weight="bold" font-family="Inter">X</text>
+                    </svg>
+                    <span class="logo-text">Excel Academy</span>
+                </div>
+            </div>
+            <div class="header-center">
+                <nav class="header-nav" id="header-nav">
+                    <a href="#/" class="nav-link active" data-route="/" data-i18n="nav_home">Bosh sahifa</a>
+                    <a href="#/courses" class="nav-link" data-route="/courses" data-i18n="nav_courses">Kurslar</a>
+                    <a href="#/dashboard" class="nav-link auth-only" data-route="/dashboard" data-i18n="nav_dashboard">Dashboard</a>
+                    <a href="#/admin" class="nav-link admin-only" data-route="/admin" data-i18n="nav_admin">Admin</a>
+                </nav>
+            </div>
+            <div class="header-right">
+                <div class="lang-selector">
+                    <button class="lang-btn" id="lang-btn">
+                        <span id="current-lang">UZ</span>
+                        <svg width="12" height="12" viewBox="0 0 12 12"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+                    </button>
+                    <div class="lang-dropdown" id="lang-dropdown">
+                        <button class="lang-option active" data-lang="uz">🇺🇿 O'zbek</button>
+                        <button class="lang-option" data-lang="ru">🇷🇺 Русский</button>
+                        <button class="lang-option" data-lang="en">🇬🇧 English</button>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <svg class="theme-icon sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <svg class="theme-icon moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                    </svg>
+                </button>
+                <div class="user-section" id="user-section">
+                    <button class="login-btn" id="login-btn" data-i18n="login">Kirish</button>
+                    <div class="user-avatar" id="user-avatar" style="display:none">
+                        <div class="avatar-circle" id="avatar-circle">U</div>
+                        <div class="user-dropdown" id="user-dropdown">
+                            <div class="user-dropdown-header">
+                                <div class="avatar-circle-lg" id="avatar-circle-lg">U</div>
+                                <div class="user-info">
+                                    <span class="user-name" id="dropdown-user-name">User</span>
+                                    <span class="user-email" id="dropdown-user-email">user@mail.com</span>
+                                </div>
+                            </div>
+                            <div class="user-dropdown-divider"></div>
+                            <a href="#/profile" class="dropdown-item" data-i18n="profile">Profil</a>
+                            <a href="#/dashboard" class="dropdown-item" data-i18n="nav_dashboard">Dashboard</a>
+                            <a href="#/certificate" class="dropdown-item" data-i18n="certificate">Sertifikat</a>
+                            <div class="user-dropdown-divider"></div>
+                            <button class="dropdown-item logout-item" id="logout-btn" data-i18n="logout">Chiqish</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+    <nav class="mobile-nav" id="mobile-nav">
+        <div class="mobile-nav-header">
+            <div class="header-logo">
+                <svg width="28" height="28" viewBox="0 0 64 64">
+                    <rect width="64" height="64" rx="12" fill="#217346"/>
+                    <text x="32" y="42" text-anchor="middle" fill="white" font-size="32" font-weight="bold">X</text>
+                </svg>
+                <span class="logo-text">Excel Academy</span>
+            </div>
+            <button class="mobile-nav-close" id="mobile-nav-close">&times;</button>
+        </div>
+        <div class="mobile-nav-links">
+            <a href="#/" class="mobile-nav-link" data-route="/" data-i18n="nav_home">Bosh sahifa</a>
+            <a href="#/courses" class="mobile-nav-link" data-route="/courses" data-i18n="nav_courses">Kurslar</a>
+            <a href="#/dashboard" class="mobile-nav-link auth-only" data-route="/dashboard" data-i18n="nav_dashboard">Dashboard</a>
+            <a href="#/admin" class="mobile-nav-link admin-only" data-route="/admin" data-i18n="nav_admin">Admin</a>
+        </div>
+        <div class="mobile-nav-footer">
+            <button class="mobile-login-btn" id="mobile-login-btn" data-i18n="login">Kirish</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="app" class="main-content"></main>
+
+    <!-- Toast Notification -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Modal Container -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div id="modal-content" class="modal-content"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- App Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/simulator.js"></script>
+    <script src="js/courses.js"></script>
+    <script src="js/lessons.js"></script>
+    <script src="js/quiz.js"></script>
+    <script src="js/certificate.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
