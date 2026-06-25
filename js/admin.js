@@ -641,3 +641,919 @@ window.Admin = {
 };
 
 console.log('%c👑 Admin (1/2) yuklandi', 'color: #7b3ff2; font-weight: bold;');
+// ==========================================
+// ADMIN.JS - 2-QISM (Password Reset, Delete, Admins, Backup, Security)
+// ==========================================
+
+Object.assign(window.Admin, {
+
+  // ==================== 🔑 PASSWORD RESET ====================
+
+  async resetUserPassword(uid) {
+    if (!Auth.isAdmin()) {
+      App.showToast('Sizda ruxsat yo\'q', 'error');
+      return;
+    }
+
+    const users = await FB.getAllUsers();
+    const user = users.find(u => u.uid === uid);
+    if (!user) return;
+
+    if (user.role === 'super_admin' && Auth.currentUser.uid !== user.uid) {
+      App.showToast('Super admin parolini boshqalar reset qila olmaydi', 'error');
+      return;
+    }
+
+    const modal = `
+      <div class="modal-overlay show" id="reset-password-modal" onclick="if(event.target===this) Admin.closeModal('reset-password-modal')">
+        <div class="modal" style="max-width: 480px;">
+          <div class="modal-header" style="background: rgba(247,181,0,0.1);">
+            <h3 class="modal-title" style="color: var(--color-bonus);">
+              <i class="fas fa-key"></i> Parolni reset qilish
+            </h3>
+            <button class="modal-close" onclick="Admin.closeModal('reset-password-modal')">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+            <div style="display: flex; gap: 12px; padding: 12px; background: var(--bg-elevated); border-radius: var(--radius-md); margin-bottom: 16px;">
+              <div style="width: 48px; height: 48px; background: var(--excel-green); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                ${(user.displayName || 'U')[0].toUpperCase()}
+              </div>
+              <div style="flex: 1;">
+                <strong>${user.displayName}</strong>
+                <div style="font-size: 12px; color: var(--text-muted);">${user.email}</div>
+              </div>
+            </div>
+
+            <div style="background: rgba(43,125,233,0.08); border-left: 4px solid var(--color-dashboard); padding: 12px 16px; border-radius: var(--radius-sm); margin-bottom: 16px;">
+              <p style="font-size: 13px; margin: 0;">
+                <i class="fas fa-info-circle"></i> 
+                <strong>Maslahat:</strong> Yangi parol yarating yoki avtomatik generatsiya qiling.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Yangi parol</label>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="new-password-input" class="form-input" 
+                       placeholder="Min 8 belgi, harf va raqam"
+                       minlength="8" style="flex: 1;">
+                <button type="button" class="btn btn-outline" onclick="Admin.generatePassword()">
+                  <i class="fas fa-magic"></i>
+                </button>
+              </div>
+              <div class="form-hint">Kamida 8 belgi, harf va raqam</div>
+              <div class="form-error" id="reset-error" style="display:none;"></div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="Admin.closeModal('reset-password-modal')">
+              Bekor qilish
+            </button>
+            <button class="btn btn-yellow" onclick="Admin.confirmResetPassword('${uid}')">
+              <i class="fas fa-key"></i> O'rnatish
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modal);
+    setTimeout(() => document.getElementById('new-password-input')?.focus(), 100);
+  },
+
+  generatePassword() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+    let password = 'A' + Math.floor(Math.random() * 10);
+    for (let i = 0; i < 10; i++) {
+      password += chars[Math.floor(Math.random() * chars.length)];
+    }
+    password = password.split('').sort(() => Math.random() - 0.5).join('');
+    
+    const input = document.getElementById('new-password-input');
+    if (input) {
+      input.value = password;
+      input.focus();
+    }
+  },
+
+  async confirmResetPassword(targetUid) {
+    const input = document.getElementById('new-password-input');
+    const errorEl = document.getElementById('reset-error');
+    
+    if (!input) return;
+    
+    const newPassword = input.value.trim();
+    if (!newPassword) {
+      this._showError(errorEl, 'Parol kiritilmadi');
+      return;
+    }
+
+    const result = await FB.resetUserPassword(Auth.currentUser.uid, targetUid, newPassword);
+
+    if (result.success) {
+      this.closeModal('reset-password-modal');
+      this._showPasswordResetSuccess(result.newPassword);
+      this.loadSection('users');
+    } else {
+      this._showError(errorEl, result.error);
+    }
+  },
+
+  _showPasswordResetSuccess(password) {
+    const modal = `
+      <div class="modal-overlay show" id="password-success-modal">
+        <div class="modal" style="max-width: 480px;">
+          <div class="modal-header" style="background: rgba(16,124,16,0.1);">
+            <h3 class="modal-title" style="color: var(--success);">
+              <i class="fas fa-check-circle"></i> Parol o'rnatildi
+            </h3>
+          </div>
+          <div class="modal-body">
+            
+            <div style="text-align: center; padding: 24px; background: var(--bg-elevated); border-radius: var(--radius-md); margin-bottom: 16px;">
+              <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">Yangi parol:</p>
+              <div style="background: var(--bg-surface); padding: 16px; border-radius: var(--radius-sm); border: 2px dashed var(--success);">
+                <code style="font-size: 20px; font-weight: 700; color: var(--success); letter-spacing: 2px; user-select: all;">${password}</code>
+              </div>
+              <button class="btn btn-sm btn-outline-green mt-2" onclick="Admin._copyPassword('${password}')">
+                <i class="fas fa-copy"></i> Nusxa olish
+              </button>
+            </div>
+
+            <div style="background: rgba(247,181,0,0.1); border-left: 4px solid var(--color-bonus); padding: 12px 16px; border-radius: var(--radius-sm);">
+              <p style="font-size: 13px; margin: 0;">
+                <i class="fas fa-exclamation-triangle" style="color: var(--color-bonus);"></i>
+                <strong>Diqqat:</strong> Bu parol faqat shu safar ko'rsatiladi. Foydalanuvchiga aytib bering.
+              </p>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-green" onclick="Admin.closeModal('password-success-modal')">
+              <i class="fas fa-check"></i> Tushunarli
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modal);
+  },
+
+  _copyPassword(password) {
+    navigator.clipboard.writeText(password).then(() => {
+      App.showToast('✅ Parol nusxalandi', 'success', 1500);
+    });
+  },
+
+  // ==================== UNBLOCK ====================
+
+  async unblockUser(uid) {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find(u => u.uid === uid);
+    if (!user) return;
+
+    if (!confirm(`"${user.displayName}" ni blokdan chiqaramizmi?`)) return;
+
+    user.loginAttempts = 0;
+    user.blockedUntil = null;
+    localStorage.setItem('users', JSON.stringify(users));
+
+    App.showToast(`✅ ${user.displayName} blokdan chiqdi`, 'success');
+    this.loadSection('users');
+  },
+
+  // ==================== 🗑️ DELETE WITH PASSWORD ====================
+
+  async deleteUser(uid) {
+    if (!Auth.isSuperAdmin()) {
+      App.showToast('Faqat super admin o\'chira oladi', 'error');
+      return;
+    }
+
+    const user = this.cachedUsers.find(u => u.uid === uid);
+    if (!user) return;
+
+    if (user.role === 'super_admin') {
+      App.showToast('Super adminni o\'chirib bo\'lmaydi', 'error');
+      return;
+    }
+
+    const modal = `
+      <div class="modal-overlay show" id="delete-confirm-modal" onclick="if(event.target===this) Admin.closeModal('delete-confirm-modal')">
+        <div class="modal" style="max-width: 480px;">
+          <div class="modal-header" style="background: rgba(216,59,1,0.1);">
+            <h3 class="modal-title" style="color: var(--danger);">
+              <i class="fas fa-exclamation-triangle"></i> O'chirishni tasdiqlash
+            </h3>
+            <button class="modal-close" onclick="Admin.closeModal('delete-confirm-modal')">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+            <div style="text-align: center; padding: 16px; background: rgba(216,59,1,0.05); border-radius: var(--radius-md); margin-bottom: 16px;">
+              <div style="width: 64px; height: 64px; margin: 0 auto 12px; background: var(--danger); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px;">
+                <i class="fas fa-user-times"></i>
+              </div>
+              <h4 style="margin-bottom: 8px;">${user.displayName}</h4>
+              <p style="color: var(--text-muted); font-size: 13px;">${user.email}</p>
+            </div>
+
+            <p style="color: var(--danger); font-weight: 600; margin-bottom: 16px;">
+              ⚠️ Foydalanuvchi va uning barcha ma'lumotlari o'chiriladi!
+            </p>
+
+            <p style="margin-bottom: 12px; font-size: 14px;">
+              Tasdiqlash uchun <strong>o'z parolingizni</strong> kiriting:
+            </p>
+
+            <div class="form-group">
+              <input type="password" id="delete-confirm-password" class="form-input" 
+                     placeholder="Sizning parolingiz" autocomplete="current-password"
+                     onkeydown="if(event.key==='Enter') Admin.confirmDelete('${uid}')">
+              <div class="form-error" id="delete-error" style="display:none;"></div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="Admin.closeModal('delete-confirm-modal')">
+              Bekor qilish
+            </button>
+            <button class="btn btn-red" onclick="Admin.confirmDelete('${uid}')">
+              <i class="fas fa-trash"></i> O'chirish
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modal);
+    setTimeout(() => document.getElementById('delete-confirm-password')?.focus(), 100);
+  },
+
+  async confirmDelete(targetUid) {
+    const passwordInput = document.getElementById('delete-confirm-password');
+    const errorEl = document.getElementById('delete-error');
+    
+    if (!passwordInput) return;
+    
+    const password = passwordInput.value;
+    if (!password) {
+      this._showError(errorEl, 'Parol kiritilmadi');
+      return;
+    }
+
+    const result = await FB.deleteUserWithConfirm(Auth.currentUser.uid, targetUid, password);
+
+    if (result.success) {
+      this.closeModal('delete-confirm-modal');
+      App.showToast(`✅ ${result.message}`, 'success');
+      this.loadSection('users');
+    } else {
+      this._showError(errorEl, result.error);
+    }
+  },
+
+  // ==================== ADMINS ====================
+
+  async renderAdmins(main) {
+    if (!Auth.isSuperAdmin()) {
+      main.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon"><i class="fas fa-lock"></i></div>
+          <h3>Ruxsat yo'q</h3>
+        </div>
+      `;
+      return;
+    }
+
+    const users = await FB.getAllUsers();
+    this.cachedUsers = users;
+    const admins = users.filter(u => u.role === 'admin' || u.role === 'super_admin');
+    const students = users.filter(u => u.role === 'student');
+
+    main.innerHTML = `
+      <h1 style="margin-bottom: 24px;"><i class="fas fa-user-shield"></i> ${I18n.t('admin_admins')}</h1>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Admin</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Sana</th>
+              <th>Amallar</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${admins.map(a => `
+              <tr>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--color-pro); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px;">
+                      ${(a.displayName || 'A')[0].toUpperCase()}
+                    </div>
+                    <strong>${a.displayName}</strong>
+                  </div>
+                </td>
+                <td style="font-size: 13px;">${a.email}</td>
+                <td>${this._renderRoleBadge(a.role)}</td>
+                <td style="font-size: 13px; color: var(--text-muted);">
+                  ${new Date(a.createdAt).toLocaleDateString('uz-UZ')}
+                </td>
+                <td>
+                  ${a.role !== 'super_admin' ? `
+                    <button class="btn btn-sm btn-red" onclick="Admin.demoteAdmin('${a.uid}')">
+                      <i class="fas fa-arrow-down"></i> Student
+                    </button>
+                  ` : '<span style="color: var(--text-muted); font-size: 12px;">👑 Himoyalangan</span>'}
+                </td>
+              </tr>
+            `).join('') || '<tr><td colspan="5" style="text-align:center;">Adminlar yo\'q</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card mt-3">
+        <div class="card-header">
+          <h3><i class="fas fa-user-plus"></i> Studentlardan admin yasash</h3>
+        </div>
+        <div class="card-body">
+          ${students.length > 0 ? `
+            <div style="display: flex; flex-direction: column; gap: 8px; max-height: 300px; overflow-y: auto;">
+              ${students.map(s => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--bg-elevated); border-radius: var(--radius-sm);">
+                  <div>
+                    <strong>${s.displayName}</strong>
+                    <span style="color: var(--text-muted); margin-left: 8px; font-size: 13px;">${s.email}</span>
+                  </div>
+                  <button class="btn btn-sm btn-purple" onclick="Admin.promoteToAdmin('${s.uid}')">
+                    <i class="fas fa-arrow-up"></i> Admin qilish
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          ` : '<p style="color: var(--text-muted); text-align: center;">Studentlar yo\'q</p>'}
+        </div>
+      </div>
+    `;
+  },
+
+  async promoteToAdmin(uid) {
+    const users = await FB.getAllUsers();
+    const user = users.find(u => u.uid === uid);
+    if (!user) return;
+
+    if (!confirm(`"${user.displayName}" ni admin qilasizmi?`)) return;
+
+    await FB.createUserDoc(uid, { ...user, role: 'admin' });
+    App.showToast(`${user.displayName} endi admin!`, 'success');
+    this.loadSection('admins');
+  },
+
+  async demoteAdmin(uid) {
+    const users = await FB.getAllUsers();
+    const user = users.find(u => u.uid === uid);
+    if (!user) return;
+
+    if (user.role === 'super_admin') {
+      App.showToast('Super adminni o\'zgartirib bo\'lmaydi', 'error');
+      return;
+    }
+
+    if (!confirm(`"${user.displayName}" ni studentga aylantirasizmi?`)) return;
+
+    await FB.createUserDoc(uid, { ...user, role: 'student' });
+    App.showToast(`${user.displayName} endi student`, 'info');
+    this.loadSection('admins');
+  },
+
+  // ==================== COURSES ====================
+
+  async renderCourses(main) {
+    const courses = await Courses.loadAllCourses();
+
+    main.innerHTML = `
+      <h1 style="margin-bottom: 24px;"><i class="fas fa-graduation-cap"></i> ${I18n.t('admin_courses')}</h1>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+        ${courses.map(course => `
+          <div class="card">
+            <div class="course-card-cover cover-${course.color}" style="height: 120px;">
+              <i class="fas ${course.icon} course-card-icon" style="font-size: 40px;"></i>
+            </div>
+            <div class="card-body">
+              <h3 style="margin-bottom: 8px;">${course.title}</h3>
+              <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">
+                ${course.description || ''}
+              </p>
+              <div style="display: flex; gap: 16px; font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+                <span><i class="fas fa-book"></i> ${course.lessons_count || 0} dars</span>
+                <span><i class="fas fa-clock"></i> ${course.duration || '-'}</span>
+              </div>
+              <button class="btn btn-sm btn-outline-green" onclick="Router.navigate('course/${course.id}')">
+                <i class="fas fa-eye"></i> Ko'rish
+              </button>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="card mt-3" style="text-align: center; padding: 32px; border: 2px dashed var(--border);">
+        <div style="font-size: 48px; color: var(--text-muted); margin-bottom: 12px;">
+          <i class="fas fa-info-circle"></i>
+        </div>
+        <h3>Kursni JSON orqali boshqarish</h3>
+        <p style="color: var(--text-secondary); margin-top: 8px;">
+          <code>data/foundation.json</code> va <code>data/pro.json</code> fayllarni tahrirlang.
+        </p>
+      </div>
+    `;
+  },
+
+  // ==================== PROGRESS ====================
+
+  async renderProgress(main) {
+    const users = await FB.getAllUsers();
+    const courses = await Courses.loadAllCourses();
+
+    let rows = '';
+    for (const u of users) {
+      const progress = await FB.getProgress(u.uid);
+      
+      for (const course of courses) {
+        const cp = progress[course.id] || {};
+        const completed = Object.keys(cp).length;
+        const total = course.modules?.reduce((s, m) => s + m.lessons.length, 0) || 0;
+        const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+        if (completed > 0) {
+          rows += `
+            <tr>
+              <td>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--excel-green); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;">
+                    ${(u.displayName || 'U')[0].toUpperCase()}
+                  </div>
+                  <span>${u.displayName}</span>
+                </div>
+              </td>
+              <td>
+                <span class="badge badge-${course.color === 'pro' ? 'purple' : 'green'}">
+                  ${course.title}
+                </span>
+              </td>
+              <td>${completed} / ${total}</td>
+              <td>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div class="progress-bar" style="flex: 1; max-width: 100px;">
+                    <div class="progress-bar-fill ${course.color === 'pro' ? 'pro' : ''}" style="width: ${percent}%"></div>
+                  </div>
+                  <strong>${percent}%</strong>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+      }
+    }
+
+    main.innerHTML = `
+      <h1 style="margin-bottom: 24px;"><i class="fas fa-chart-line"></i> ${I18n.t('admin_progress')}</h1>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Foydalanuvchi</th>
+              <th>Kurs</th>
+              <th>Darslar</th>
+              <th>Progress</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows || '<tr><td colspan="4" style="text-align:center; padding: 32px; color: var(--text-muted);">Hali progress yo\'q</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    `;
+  },
+
+  // ==================== CERTIFICATES ====================
+
+  async renderCertificates(main) {
+    const users = await FB.getAllUsers();
+    const allCerts = [];
+
+    for (const u of users) {
+      const certs = await FB.getCertificates(u.uid);
+      certs.forEach(c => allCerts.push({ ...c, userName: u.displayName, userEmail: u.email }));
+    }
+
+    this.cachedCertificates = allCerts;
+
+    main.innerHTML = `
+      <h1 style="margin-bottom: 24px;"><i class="fas fa-certificate"></i> ${I18n.t('admin_certificates')}</h1>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Foydalanuvchi</th>
+              <th>Kurs</th>
+              <th>Sana</th>
+              <th>Amal</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${allCerts.length > 0 ? allCerts.map(c => `
+              <tr>
+                <td><code style="font-size: 11px;">${c.certId}</code></td>
+                <td>
+                  <strong>${c.userName}</strong>
+                  <div style="font-size: 11px; color: var(--text-muted);">${c.userEmail}</div>
+                </td>
+                <td>
+                  <span class="badge badge-${c.courseId === 'pro' ? 'purple' : 'green'}">
+                    ${c.courseTitle}
+                  </span>
+                </td>
+                <td>${new Date(c.issuedAt).toLocaleDateString('uz-UZ')}</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-green" onclick="Certificate.view('${c.certId}')">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </td>
+              </tr>
+            `).join('') : '<tr><td colspan="5" style="text-align:center; padding: 32px; color: var(--text-muted);">Sertifikatlar yo\'q</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    `;
+  },
+
+  // ==================== SECURITY ====================
+
+  async renderSecurity(main) {
+    const users = await FB.getAllUsers();
+    const blockedUsers = users.filter(u => u.blockedUntil && new Date(u.blockedUntil) > new Date());
+    const recentLogins = users.filter(u => u.lastLogin)
+      .sort((a, b) => new Date(b.lastLogin) - new Date(a.lastLogin))
+      .slice(0, 10);
+
+    main.innerHTML = `
+      <h1 style="margin-bottom: 24px;"><i class="fas fa-shield-alt"></i> Xavfsizlik markazi</h1>
+
+      <div class="stats-grid">
+        <div class="stat-card stat-green">
+          <div class="stat-card-icon"><i class="fas fa-lock"></i></div>
+          <div class="stat-card-info">
+            <div class="stat-card-num">SHA-256</div>
+            <div class="stat-card-label">Shifrlash</div>
+          </div>
+        </div>
+
+        <div class="stat-card ${blockedUsers.length > 0 ? 'stat-yellow' : 'stat-green'}">
+          <div class="stat-card-icon"><i class="fas fa-ban"></i></div>
+          <div class="stat-card-info">
+            <div class="stat-card-num">${blockedUsers.length}</div>
+            <div class="stat-card-label">Bloklangan</div>
+          </div>
+        </div>
+
+        <div class="stat-card stat-blue">
+          <div class="stat-card-icon"><i class="fas fa-user-check"></i></div>
+          <div class="stat-card-info">
+            <div class="stat-card-num">${users.filter(u => u.lastLogin).length}</div>
+            <div class="stat-card-label">Faol userlar</div>
+          </div>
+        </div>
+
+        <div class="stat-card stat-purple">
+          <div class="stat-card-icon"><i class="fas fa-shield-alt"></i></div>
+          <div class="stat-card-info">
+            <div class="stat-card-num">100%</div>
+            <div class="stat-card-label">Himoya</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <div class="card-header">
+          <h3><i class="fas fa-shield-alt"></i> Faol himoya choralari</h3>
+        </div>
+        <div class="card-body">
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            ${[
+              { icon: 'lock', text: 'SHA-256 parol shifrlash' },
+              { icon: 'ban', text: 'Brute Force himoya (5 marta xato → 5 daqiqa block)' },
+              { icon: 'shield-alt', text: 'XSS hujumlardan himoya' },
+              { icon: 'user-check', text: 'Role-Based Access Control' },
+              { icon: 'fingerprint', text: 'Session integrity check' },
+              { icon: 'key', text: 'Parol reset (admin)' },
+              { icon: 'database', text: 'Backup/Restore tizimi' },
+              { icon: 'check-circle', text: 'Validatsiya (email, parol, ism)' }
+            ].map(item => `
+              <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(16, 124, 16, 0.05); border-left: 4px solid var(--success); border-radius: var(--radius-sm);">
+                <i class="fas fa-${item.icon}" style="color: var(--success); font-size: 18px;"></i>
+                <span style="flex: 1;">${item.text}</span>
+                <span class="badge badge-green"><i class="fas fa-check"></i> Faol</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+
+      ${blockedUsers.length > 0 ? `
+        <div class="card mt-3">
+          <div class="card-header">
+            <h3><i class="fas fa-ban" style="color: var(--danger);"></i> Bloklangan foydalanuvchilar</h3>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Foydalanuvchi</th>
+                  <th>Email</th>
+                  <th>Bloklangacha</th>
+                  <th>Amal</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${blockedUsers.map(u => `
+                  <tr>
+                    <td><strong>${u.displayName}</strong></td>
+                    <td style="font-size: 13px;">${u.email}</td>
+                    <td style="font-size: 13px; color: var(--danger);">
+                      ${new Date(u.blockedUntil).toLocaleString('uz-UZ')}
+                    </td>
+                    <td>
+                      <button class="btn btn-sm btn-outline" onclick="Admin.unblockUser('${u.uid}')" style="color: var(--success); border-color: var(--success);">
+                        <i class="fas fa-unlock-alt"></i> Chiqarish
+                      </button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ` : ''}
+
+      <div class="card mt-3">
+        <div class="card-header">
+          <h3><i class="fas fa-history"></i> So'nggi kirishlar</h3>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Foydalanuvchi</th>
+                <th>Email</th>
+                <th>Oxirgi kirish</th>
+                <th>Urinishlar</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${recentLogins.map(u => `
+                <tr>
+                  <td><strong>${u.displayName}</strong></td>
+                  <td style="font-size: 13px;">${u.email}</td>
+                  <td style="font-size: 13px;">${new Date(u.lastLogin).toLocaleString('uz-UZ')}</td>
+                  <td>
+                    <span style="color: ${u.loginAttempts > 0 ? 'var(--warning)' : 'var(--success)'};">
+                      ${u.loginAttempts || 0}
+                    </span>
+                  </td>
+                </tr>
+              `).join('') || '<tr><td colspan="4" style="text-align:center; color: var(--text-muted);">Login tarixi yo\'q</td></tr>'}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  },
+
+  // ==================== SETTINGS ====================
+
+  async renderSettings(main) {
+    main.innerHTML = `
+      <h1 style="margin-bottom: 24px;"><i class="fas fa-cog"></i> Sozlamalar</h1>
+
+      <div class="card mb-3">
+        <div class="card-header">
+          <h3><i class="fas fa-database"></i> Ma'lumotlar bazasi</h3>
+        </div>
+        <div class="card-body">
+          <div style="display: flex; justify-content: space-between; padding: 12px; background: var(--bg-elevated); border-radius: var(--radius-sm); margin-bottom: 12px;">
+            <span>Joriy rejim:</span>
+            <strong style="color: var(--${FB.offlineMode ? 'warning' : 'success'});">
+              ${FB.offlineMode ? '⚠️ Offline (LocalStorage)' : '✅ Online (Firebase)'}
+            </strong>
+          </div>
+
+          ${FB.offlineMode ? `
+            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 16px;">
+              <i class="fas fa-info-circle"></i> 
+              Ma'lumotlar brauzer xotirasida saqlanadi.
+            </p>
+            
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="btn btn-outline-green" onclick="Admin.exportData()">
+                <i class="fas fa-download"></i> Backup yaratish
+              </button>
+              
+              ${Auth.isSuperAdmin() ? `
+                <button class="btn btn-outline" onclick="Admin.showImportModal()">
+                  <i class="fas fa-upload"></i> Backup tiklash
+                </button>
+              ` : ''}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3><i class="fas fa-info-circle"></i> Tizim haqida</h3>
+        </div>
+        <div class="card-body">
+          <div style="font-size: 13px;">
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+              <span style="color: var(--text-muted);">Platforma:</span>
+              <strong>Excel Academy v2.0</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+              <span style="color: var(--text-muted);">Joriy admin:</span>
+              <strong>${Auth.currentUser.displayName} (${Auth.currentUser.role})</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+              <span style="color: var(--text-muted);">Super Admin:</span>
+              <code>${FB.SUPER_ADMIN_EMAIL}</code>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+              <span style="color: var(--text-muted);">Til:</span>
+              <strong>${I18n.getCurrentLangName()}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  // ==================== BACKUP / IMPORT ====================
+
+  exportData() {
+    const data = {
+      users: JSON.parse(localStorage.getItem('users') || '[]'),
+      progress: JSON.parse(localStorage.getItem('progress') || '{}'),
+      quiz_results: JSON.parse(localStorage.getItem('quiz_results') || '{}'),
+      certificates: JSON.parse(localStorage.getItem('certificates') || '[]'),
+      xpData: JSON.parse(localStorage.getItem('xpData') || 'null'),
+      exportedAt: new Date().toISOString(),
+      exportedBy: Auth.currentUser.email
+    };
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `excel-academy-backup-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    App.showToast('✅ Backup yaratildi!', 'success');
+  },
+
+  showImportModal() {
+    if (!Auth.isSuperAdmin()) {
+      App.showToast('Faqat super admin import qila oladi', 'error');
+      return;
+    }
+
+    const modal = `
+      <div class="modal-overlay show" id="import-modal" onclick="if(event.target===this) Admin.closeModal('import-modal')">
+        <div class="modal" style="max-width: 540px;">
+          <div class="modal-header">
+            <h3 class="modal-title">
+              <i class="fas fa-upload"></i> Backup tiklash
+            </h3>
+            <button class="modal-close" onclick="Admin.closeModal('import-modal')">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+            <div style="background: rgba(247,181,0,0.1); border-left: 4px solid var(--color-bonus); padding: 12px 16px; border-radius: var(--radius-sm); margin-bottom: 16px;">
+              <p style="font-size: 13px; margin: 0;">
+                <i class="fas fa-exclamation-triangle" style="color: var(--color-bonus);"></i>
+                <strong>Diqqat:</strong> Avval o'z parolingiz bilan tasdiqlang.
+              </p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Backup fayl (.json)</label>
+              <input type="file" id="backup-file" class="form-input" accept=".json" style="padding: 8px;">
+              <div class="form-hint">Faqat Excel Academy backup fayli</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Import rejimi</label>
+              <select id="import-mode" class="form-input">
+                <option value="merge">Birlashtirish (qo'shish, duplikatsiz)</option>
+                <option value="replace">Almashtirish (butunlay almashtirish)</option>
+              </select>
+              <div class="form-hint" id="mode-hint">
+                💡 Birlashtirish - faqat yangi ma'lumotlar qo'shiladi
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Sizning parolingiz</label>
+              <input type="password" id="import-password" class="form-input" 
+                     placeholder="Tasdiqlash uchun parol" autocomplete="current-password">
+              <div class="form-error" id="import-error" style="display:none;"></div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="Admin.closeModal('import-modal')">
+              Bekor qilish
+            </button>
+            <button class="btn btn-green" onclick="Admin.confirmImport()">
+              <i class="fas fa-check"></i> Tiklash
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modal);
+
+    setTimeout(() => {
+      const modeSelect = document.getElementById('import-mode');
+      const hint = document.getElementById('mode-hint');
+      if (modeSelect && hint) {
+        modeSelect.addEventListener('change', (e) => {
+          if (e.target.value === 'replace') {
+            hint.innerHTML = '⚠️ <strong style="color: var(--danger);">Almashtirish - barcha mavjud o\'chiriladi!</strong>';
+          } else {
+            hint.textContent = '💡 Birlashtirish - faqat yangi qo\'shiladi';
+          }
+        });
+      }
+    }, 100);
+  },
+
+  async confirmImport() {
+    const fileInput = document.getElementById('backup-file');
+    const modeSelect = document.getElementById('import-mode');
+    const passwordInput = document.getElementById('import-password');
+    const errorEl = document.getElementById('import-error');
+
+    if (!fileInput || !fileInput.files[0]) {
+      this._showError(errorEl, 'Backup fayl tanlanmadi');
+      return;
+    }
+
+    if (!passwordInput.value) {
+      this._showError(errorEl, 'Parol kiritilmadi');
+      return;
+    }
+
+    const file = fileInput.files[0];
+    const mode = modeSelect.value;
+    const password = passwordInput.value;
+
+    if (mode === 'replace') {
+      if (!confirm('⚠️ Mavjud barcha ma\'lumotlar almashtiriladi. Davom etish?')) return;
+    }
+
+    try {
+      const text = await file.text();
+      const result = await FB.importBackup(Auth.currentUser.uid, password, text, mode);
+
+      if (result.success) {
+        this.closeModal('import-modal');
+        const msg = mode === 'replace' 
+          ? `✅ Ma'lumotlar to'liq almashtirildi`
+          : `✅ Qo'shildi: ${result.stats.users} user, ${result.stats.progress} progress, ${result.stats.quizzes} test, ${result.stats.certificates} sertifikat`;
+        App.showToast(msg, 'success', 5000);
+        setTimeout(() => location.reload(), 1500);
+      } else {
+        this._showError(errorEl, result.error);
+      }
+    } catch (error) {
+      this._showError(errorEl, 'Fayl xatosi: ' + error.message);
+    }
+  }
+});
+
+console.log('%c👑 Admin (2/2) yuklandi', 'color: #7b3ff2; font-weight: bold;');
