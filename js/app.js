@@ -165,6 +165,14 @@ if (typeof XPSystem !== 'undefined') {
    * User UI yangilash
    */
   updateUserUI() {
+    // XP bar ko'rsatish
+const xpBar = document.getElementById('xp-bar');
+if (xpBar) {
+  xpBar.style.display = user ? 'block' : 'none';
+  if (user && typeof XPSystem !== 'undefined') {
+    XPSystem.renderBar();
+  }
+}
     const user = this.currentUser;
     const authEl = document.getElementById('header-auth');
     const userEl = document.getElementById('header-user');
