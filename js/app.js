@@ -30,7 +30,10 @@ window.App = {
 
       // 5. Router
       Router.init();
-
+     // 6. XP System
+if (typeof XPSystem !== 'undefined') {
+  XPSystem.init();
+}
       // 6. Event listeners
       this.setupEventListeners();
 
