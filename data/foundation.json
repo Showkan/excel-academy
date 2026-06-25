@@ -1,7 +1,7 @@
 {
   "id": "foundation",
   "title": "Excel Foundation",
-  "description": "Excel asoslari, formulalar, VLOOKUP, Pivot Table va Mini Dashboard. Bu kurs sizni Excel'da ishonchli ishlatishni o'rgatadi.",
+  "description": "Excel asoslari, formulalar, VLOOKUP, Pivot Table va Mini Dashboard.",
   "level": "Foundation",
   "color": "foundation",
   "icon": "fa-table",
@@ -13,9 +13,7 @@
   "objectives": [
     "Excel interfeysini to'liq bilish",
     "Asosiy formulalar bilan ishlash",
-    "IF, COUNTIF, SUMIF, VLOOKUP formulalarini qo'llash",
     "Pivot Table yaratish va tahlil qilish",
-    "Filter va sortlashni amalda qo'llash",
     "Oddiy Dashboard yaratish"
   ],
   "modules": [
@@ -31,1258 +29,172 @@
           "description": "Excel dastur interfeysi bilan tanishish",
           "topics": [
             "Excel oynalari va elementlari",
-            "Ribbon (lenta) va Tab'lar",
             "Cell, Row, Column tushunchasi",
-            "Workbook va Worksheet farqi",
-            "Saqlash va ochish (Save / Open)"
+            "Workbook va Worksheet farqi"
           ],
           "content": [
-            {
-              "type": "heading",
-              "level": 2,
-              "text": "Excel nima?"
-            },
-            {
-              "type": "paragraph",
-              "text": "Excel — Microsoft Office paketiga kiruvchi elektron jadval dasturi. U raqamlar, matnlar va formulalar bilan ishlash uchun mo'ljallangan. Bugungi kunda Excel — biznes, moliya, ta'lim va boshqa sohalarda eng ko'p ishlatiladigan vositalardan biri."
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Asosiy tushunchalar"
-            },
-            {
-              "type": "list",
-              "items": [
-                "<strong>Workbook</strong> — Excel fayli (.xlsx)",
-                "<strong>Worksheet (Sheet)</strong> — Workbook ichidagi bitta varaq",
-                "<strong>Cell (Katak)</strong> — Bitta hujayra (masalan: A1)",
-                "<strong>Row (Qator)</strong> — Gorizontal qator (1, 2, 3...)",
-                "<strong>Column (Ustun)</strong> — Vertikal ustun (A, B, C...)",
-                "<strong>Range</strong> — Bir nechta katak (A1:B5)"
-              ]
-            },
-            {
-              "type": "note",
-              "text": "Excel'da har bir varaq <strong>1,048,576 qator</strong> va <strong>16,384 ustun</strong> (XFD gacha) bo'ladi. Bu juda katta hajm!"
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Ribbon (Lenta) bo'limlari"
-            },
-            {
-              "type": "list",
-              "items": [
-                "<strong>File</strong> — Saqlash, ochish, chop etish",
-                "<strong>Home</strong> — Asosiy formatlash",
-                "<strong>Insert</strong> — Jadval, grafik, rasm qo'shish",
-                "<strong>Page Layout</strong> — Sahifa sozlamalari",
-                "<strong>Formulas</strong> — Formula va funksiyalar",
-                "<strong>Data</strong> — Saralash, filtr, ma'lumot",
-                "<strong>Review</strong> — Sharhlar, himoya",
-                "<strong>View</strong> — Ko'rinish sozlamalari"
-              ]
-            }
+            { "type": "heading", "level": 2, "text": "Excel nima?" },
+            { "type": "paragraph", "text": "Excel — Microsoft Office paketiga kiruvchi elektron jadval dasturi. U raqamlar, matnlar va formulalar bilan ishlash uchun mo'ljallangan." },
+            { "type": "heading", "level": 3, "text": "Asosiy tushunchalar" },
+            { "type": "list", "items": ["<strong>Workbook</strong> — Excel fayli (.xlsx)", "<strong>Worksheet (Sheet)</strong> — Workbook ichidagi bitta varaq", "<strong>Cell (Katak)</strong> — Bitta hujayra (masalan: A1)", "<strong>Row (Qator)</strong> — Gorizontal qator (1, 2, 3...)", "<strong>Column (Ustun)</strong> — Vertikal ustun (A, B, C...)"] },
+            { "type": "note", "text": "Excel'da har bir varaq <strong>1,048,576 qator</strong> va <strong>16,384 ustun</strong> (XFD gacha) bo'ladi." }
           ],
           "shortcuts": [
             { "action": "Yangi Workbook", "keys": "Ctrl + N" },
-            { "action": "Faylni ochish", "keys": "Ctrl + O" },
-            { "action": "Saqlash", "keys": "Ctrl + S" },
-            { "action": "Save As", "keys": "F12" },
-            { "action": "Chop etish", "keys": "Ctrl + P" },
-            { "action": "Hammasini tanlash", "keys": "Ctrl + A" }
+            { "action": "Saqlash", "keys": "Ctrl + S" }
           ],
           "examples": [
             {
               "title": "Katak manzili",
-              "description": "Excel'da har bir katak o'z manziliga ega. Masalan: A1 = ustun A, qator 1",
-              "table": {
-                "headers": ["", "A", "B", "C"],
-                "rows": [
-                  ["1", "A1", "B1", "C1"],
-                  ["2", "A2", "B2", "C2"],
-                  ["3", "A3", "B3", "C3"]
-                ]
-              }
+              "description": "A1 = ustun A, qator 1",
+              "table": { "headers": ["", "A", "B", "C"], "rows": [["1", "A1", "B1", "C1"], ["2", "A2", "B2", "C2"]] }
             }
           ],
-          "simulator": true,
+          "sim": {
+            "cols": ["A", "B", "C", "D", "E", "F"],
+            "rows": 3,
+            "preset": { "A1": "Ism", "B1": "Kirim", "C1": "Chiqim", "D1": "Bonus", "A2": "Sherzod", "B2": 10000, "C2": 3400, "D2": 200 },
+            "locked": ["A1", "B1", "C1", "D1", "A2", "B2", "C2", "D2"],
+            "task": "F2 katakka Kirim-Chiqim+Bonus formulasini yozing (masalan: =B2-C2+D2)",
+            "expected": { "F2": 6800 },
+            "tolerance": 0
+          },
+          "exercises": [
+            {
+              "id": "ex1", "level": "🟢",
+              "q": "B2 katakka 'Sherzod' matnini kiritish uchun qaysi katak tanlanadi?",
+              "grid": { "cols": ["A", "B"], "rows": 2, "preset": { "A1": "Ism" } },
+              "answerType": "text", "expected": "B2",
+              "explain": "B2 — B ustun va 2-qator kesishmasidagi katak."
+            },
+            {
+              "id": "ex2", "level": "🟢",
+              "q": "A3 katakka o'z ismingizni yozing (matn kiriting)",
+              "grid": { "cols": ["A"], "rows": 3, "preset": { "A1": "Ism", "A2": "Sherzod" } },
+              "answerType": "text", "expected": "Ali",
+              "explain": "Siz istalgan matn kiritishingiz mumkin."
+            },
+            {
+              "id": "ex3", "level": "🟡",
+              "q": "C2 katakka 100+200 formulasini yozing",
+              "grid": { "cols": ["A", "B", "C"], "rows": 2, "preset": { "B1": "Hisob" } },
+              "answerType": "formula", "expected": "=100+200",
+              "explain": "Formulalar = bilan boshlanadi va C2 da 300 natijasi chiqadi."
+            }
+          ],
+          "game": {
+            "type": "quizrush",
+            "config": {
+              "duration": 60,
+              "items": [
+                { "q": "Gorizontal qator nima deb ataladi?", "opts": ["Column", "Row", "Cell", "Sheet"], "ans": 1 },
+                { "q": "Excel fayli nima deb ataladi?", "opts": ["Workbook", "Word", "Page", "Cell"], "ans": 0 }
+              ]
+            }
+          },
+          "aiKB": [
+            { "q": ["katak nima", "cell nima"], "a": "Katak — ustun va qator kesishgan joy, masalan B4." },
+            { "q": ["qanday formula yozish"], "a": "Har formula = belgisidan boshlanadi, masalan =C2-D2" }
+          ],
           "quiz": {
-            "passingScore": 70,
-            "timeLimit": 5,
+            "passingScore": 70, "timeLimit": 5,
             "questions": [
-              {
-                "question": "Excel fayli qaysi format bilan saqlanadi?",
-                "options": [".doc", ".xlsx", ".pdf", ".txt"],
-                "correct": 1,
-                "explanation": ".xlsx — bu Excel 2007 dan keyingi standart format. Eski versiyalarda .xls ishlatilgan."
-              },
-              {
-                "question": "A1 katagi nimani anglatadi?",
-                "options": [
-                  "1-qator, A-ustun",
-                  "A-qator, 1-ustun",
-                  "1-sheet",
-                  "Birinchi formula"
-                ],
-                "correct": 0,
-                "explanation": "A1 — bu A ustun va 1-qatorda joylashgan katak."
-              },
-              {
-                "question": "Workbook nima?",
-                "options": [
-                  "Bitta katak",
-                  "Bitta varaq",
-                  "Excel fayli",
-                  "Formula"
-                ],
-                "correct": 2,
-                "explanation": "Workbook — bu Excel faylining o'zi (.xlsx). U bir nechta Worksheet (varaq) dan tashkil topadi."
-              },
-              {
-                "question": "Excelda nechta ustun mavjud?",
-                "options": ["256", "1,024", "16,384", "65,536"],
-                "correct": 2,
-                "explanation": "Zamonaviy Excel'da 16,384 ustun (A dan XFD gacha) mavjud."
-              }
+              { "question": "Excel fayli qaysi format bilan saqlanadi?", "options": [".doc", ".xlsx", ".pdf", ".txt"], "correct": 1, "explanation": ".xlsx — Excel standart formati." },
+              { "question": "A1 katagi nimani anglatadi?", "options": ["1-qator, A-ustun", "A-qator, 1-ustun", "1-sheet", "Birinchi formula"], "correct": 0, "explanation": "A1 — A ustun va 1-qatorda joylashgan katak." },
+              { "question": "Workbook nima?", "options": ["Bitta katak", "Bitta varaq", "Excel fayli", "Formula"], "correct": 2, "explanation": "Workbook — bu Excel faylining o'zi (.xlsx)." }
             ]
           }
         },
         {
           "id": "lesson-2",
           "title": "Basic Formulas",
-"sim": {
-  "cols": ["A", "B", "C", "D"],
-  "rows": 5,
-  "preset": { "A1": "Mahsulot", "B1": "Narxi", "C1": "Soni", "A2": "Olma", "B2": "5000", "C2": "10", "A3": "Banan", "B3": "3000", "C3": "15" },
-  "locked": ["A1", "B1", "C1", "A2", "B2", "C2", "A3", "B3", "C3"],
-  "allowedFns": ["SUM"],
-  "task": "D2 katakka Olma va Banan narxlari yig'indisini SUM formulasi bilan chiqaring",
-  "expected": { "D2": 8000 },
-  "tolerance": 0
-},
-"exercises": [
-  {
-    "id": "ex1",
-    "level": "🟢",
-    "q": "B5 katakka A ustundagi barcha sonlar yig'indisini chiqaring (SUM ishlating)",
-    "grid": { "cols": ["A"], "rows": 4, "preset": { "A1": 10, "A2": 20, "A3": 30 } },
-    "answerType": "formula",
-    "expected": "=SUM(A1:A3)",
-    "explain": "SUM funksiyasi diapazondagi barcha sonlarni qo'shadi."
-  }
-],
-"game": {
-  "type": "quizrush",
-  "config": {
-    "duration": 60,
-    "items": [
-      { "q": "Yig'indi funksiyasi nomi nima?", "opts": ["SUM", "IF", "MAX", "MIN"], "ans": 0 }
-    ]
-  }
-},
-"aiKB": [
-  { "q": ["sum nima", "yig'indi"], "a": "SUM — diapazondagi sonlarni qo'shadi. Misol: =SUM(A1:A5)" },
-  { "q": ["average nima", "o'rtacha"], "a": "AVERAGE — o'rtacha arifmetik topadi." }
-]
           "day": 2,
           "duration": "45 min",
           "description": "Asosiy matematik formulalar bilan tanishish",
-          "topics": [
-            "Formula nima va qanday yoziladi",
-            "Asosiy operatorlar (+, -, *, /)",
-            "SUM, AVERAGE, MIN, MAX, COUNT",
-            "Katak manzillarini ishlatish",
-            "Absolute va Relative reference ($)"
-          ],
+          "topics": ["Formula nima va qanday yoziladi", "Asosiy operatorlar (+, -, *, /)", "SUM, AVERAGE funksiyalari"],
           "content": [
-            {
-              "type": "heading",
-              "level": 2,
-              "text": "Formula nima?"
-            },
-            {
-              "type": "paragraph",
-              "text": "Formula — bu Excel'da hisob-kitob qilish uchun yozma ifoda. Har qanday formula <strong>=</strong> (teng) belgisi bilan boshlanadi."
-            },
-            {
-              "type": "code",
-              "code": "=A1+B1     ← A1 va B1 ni qo'shish\n=10*5      ← Oddiy ko'paytirish\n=SUM(A1:A10)  ← A1 dan A10 gacha yig'indi"
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Asosiy operatorlar"
-            },
-            {
-              "type": "list",
-              "items": [
-                "<strong>+</strong> — Qo'shish",
-                "<strong>-</strong> — Ayirish",
-                "<strong>*</strong> — Ko'paytirish",
-                "<strong>/</strong> — Bo'lish",
-                "<strong>^</strong> — Daraja (2^3 = 8)",
-                "<strong>%</strong> — Foiz"
-              ]
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Eng muhim funksiyalar"
-            },
-            {
-              "type": "note",
-              "text": "Funksiyalar — bu Excel'da oldindan yozilgan tayyor formulalar. Ularni ishlatish juda oson!"
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "$ belgisi (Absolute reference)"
-            },
-            {
-              "type": "paragraph",
-              "text": "Agar formulani boshqa kataklarga ko'chirsangiz, manzillar avtomatik o'zgaradi. Buni to'xtatish uchun <strong>$</strong> belgisi ishlatiladi."
-            },
-            {
-              "type": "list",
-              "items": [
-                "<code>A1</code> — Relative (o'zgaradi)",
-                "<code>$A$1</code> — Absolute (o'zgarmaydi)",
-                "<code>$A1</code> — Faqat ustun qotirilgan",
-                "<code>A$1</code> — Faqat qator qotirilgan"
-              ]
-            }
+            { "type": "heading", "level": 2, "text": "Formula nima?" },
+            { "type": "paragraph", "text": "Formula — bu Excel'da hisob-kitob qilish uchun yozma ifoda. Har qanday formula <strong>=</strong> (teng) belgisi bilan boshlanadi." },
+            { "type": "code", "code": "=A1+B1\n=SUM(A1:A10)" }
           ],
           "formulas": [
-            {
-              "name": "SUM",
-              "formula": "=SUM(A1:A10)",
-              "description": "A1 dan A10 gacha bo'lgan barcha sonlar yig'indisi"
-            },
-            {
-              "name": "AVERAGE",
-              "formula": "=AVERAGE(A1:A10)",
-              "description": "O'rtacha qiymat (arifmetik o'rtacha)"
-            },
-            {
-              "name": "MIN",
-              "formula": "=MIN(A1:A10)",
-              "description": "Eng kichik qiymat"
-            },
-            {
-              "name": "MAX",
-              "formula": "=MAX(A1:A10)",
-              "description": "Eng katta qiymat"
-            },
-            {
-              "name": "COUNT",
-              "formula": "=COUNT(A1:A10)",
-              "description": "Sonlar sonini hisoblash"
-            },
-            {
-              "name": "Yig'indi (oddiy)",
-              "formula": "=A1+B1+C1",
-              "description": "3 ta katakni qo'shish"
-            }
+            { "name": "SUM", "formula": "=SUM(A1:A10)", "description": "A1 dan A10 gacha bo'lgan barcha sonlar yig'indisi" },
+            { "name": "AVERAGE", "formula": "=AVERAGE(A1:A10)", "description": "O'rtacha qiymat" }
           ],
-          "shortcuts": [
-            { "action": "AutoSum (avtomatik yig'indi)", "keys": "Alt + =" },
-            { "action": "Formulani tahrirlash", "keys": "F2" },
-            { "action": "Absolute reference qo'yish", "keys": "F4" },
-            { "action": "Bekor qilish", "keys": "Esc" },
-            { "action": "Tasdiqlash", "keys": "Enter" }
-          ],
-          "examples": [
-            {
-              "title": "Mahsulotlar narxi yig'indisi",
-              "description": "Ushbu jadvalda umumiy summani topish uchun =SUM(C2:C5) ishlating",
-              "table": {
-                "headers": ["A", "B", "C"],
-                "rows": [
-                  ["Mahsulot", "Soni", "Narxi"],
-                  ["Olma", "10", "5000"],
-                  ["Banan", "15", "3000"],
-                  ["Apelsin", "20", "4500"],
-                  ["Anor", "8", "8000"]
-                ]
-              },
-              "formula": "=SUM(C2:C5)",
-              "result": "20,500"
-            }
-          ],
-          "simulator": true,
-          "simulatorData": {
-            "A1": "Mahsulot", "B1": "Narxi", "C1": "Soni", "D1": "Jami",
-            "A2": "Olma", "B2": "5000", "C2": "10",
-            "A3": "Banan", "B3": "3000", "C3": "15",
-            "A4": "Apelsin", "B4": "4500", "C4": "20"
+          "sim": {
+            "cols": ["A", "B", "C", "D"],
+            "rows": 4,
+            "preset": { "A1": "Mahsulot", "B1": "Soni", "C1": "Narxi", "A2": "Olma", "B2": 10, "C2": 5000, "A3": "Banan", "B3": 15, "C3": 3000, "A4": "Apelsin", "B4": 20, "C4": 4500 },
+            "locked": ["A1", "B1", "C1", "A2", "B2", "C2", "A3", "B3", "C3", "A4", "B4", "C4"],
+            "task": "D2 katakka B2 va C2 ni ko'paytiruvchi formula yozing (=B2*C2)",
+            "expected": { "D2": 50000 },
+            "tolerance": 0
           },
-          "quiz": {
-            "passingScore": 70,
-            "timeLimit": 5,
-            "questions": [
-              {
-                "question": "Formula qaysi belgi bilan boshlanadi?",
-                "options": ["+", "=", "#", "@"],
-                "correct": 1,
-                "explanation": "Har qanday Excel formulasi = (teng) belgisi bilan boshlanadi."
-              },
-              {
-                "question": "=SUM(A1:A5) nimani hisoblaydi?",
-                "options": [
-                  "A1 va A5 ni qo'shadi",
-                  "A1 dan A5 gacha o'rtacha",
-                  "A1 dan A5 gacha yig'indi",
-                  "A1 va A5 ni ko'paytiradi"
-                ],
-                "correct": 2,
-                "explanation": "SUM funksiyasi diapazondagi (A1:A5) barcha sonlar yig'indisini topadi."
-              },
-              {
-                "question": "$A$1 qanday reference?",
-                "options": ["Relative", "Absolute", "Mixed", "Auto"],
-                "correct": 1,
-                "explanation": "$A$1 — Absolute reference. Formulani boshqa katakka ko'chirganda ham o'zgarmaydi."
-              },
-              {
-                "question": "Eng katta qiymatni topish uchun qaysi funksiya?",
-                "options": ["BIG", "TOP", "MAX", "HIGH"],
-                "correct": 2,
-                "explanation": "MAX funksiyasi diapazondagi eng katta qiymatni topadi."
-              },
-              {
-                "question": "Daraja olish operatori qaysi?",
-                "options": ["*", "^", "**", "%"],
-                "correct": 1,
-                "explanation": "^ belgisi daraja uchun ishlatiladi. Masalan, 2^3 = 8."
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "id": "mod-2",
-      "title": "Mantiqiy va qidiruv funksiyalari",
-      "lessons": [
-        {
-          "id": "lesson-3",
-          "title": "IF Formula",
-          "day": 3,
-          "duration": "40 min",
-          "description": "Shartli mantiqni Excel'da qo'llash",
-          "topics": [
-            "IF funksiyasi sintaksisi",
-            "Mantiqiy operatorlar (>, <, =, <>)",
-            "Ichma-ich (nested) IF",
-            "AND, OR mantiqiy funksiyalari",
-            "Amaliy misollar"
+          "exercises": [
+            {
+              "id": "ex1", "level": "🟢",
+              "q": "A1:A4 diapazonidagi sonlar yig'indisini SUM bilan toping",
+              "grid": { "cols": ["A"], "rows": 4, "preset": { "A1": 10, "A2": 20, "A3": 30, "A4": 40 } },
+              "answerType": "formula", "expected": "=SUM(A1:A4)",
+              "explain": "SUM funksiyasi diapazondagi sonlarni qo'shadi."
+            }
           ],
-          "content": [
-            {
-              "type": "heading",
-              "level": 2,
-              "text": "IF funksiyasi"
-            },
-            {
-              "type": "paragraph",
-              "text": "IF — Excel'dagi eng muhim mantiqiy funksiya. U shartni tekshiradi va natijaga qarab ikki xil javob qaytaradi."
-            },
-            {
-              "type": "code",
-              "code": "=IF(shart, agar_to'g'ri, agar_noto'g'ri)\n\n=IF(A1>10, \"Ko'p\", \"Kam\")\n=IF(B2>=60, \"O'tdi\", \"Yiqildi\")\n=IF(C1=\"Erkak\", 1, 0)"
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Mantiqiy operatorlar"
-            },
-            {
-              "type": "list",
+          "game": {
+            "type": "quizrush",
+            "config": {
               "items": [
-                "<code>=</code> — teng",
-                "<code>></code> — katta",
-                "<code><</code> — kichik",
-                "<code>>=</code> — katta yoki teng",
-                "<code><=</code> — kichik yoki teng",
-                "<code><></code> — teng emas"
+                { "q": "Yig'indi funksiyasi nomi nima?", "opts": ["SUM", "IF", "MAX", "MIN"], "ans": 0 },
+                { "q": "O'rtacha qiymat funksiyasi?", "opts": ["AVG", "AVERAGE", "MED", "MID"], "ans": 1 }
               ]
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Nested IF (Ichma-ich IF)"
-            },
-            {
-              "type": "paragraph",
-              "text": "Bir nechta shartni tekshirish uchun IF ichida IF ishlatish mumkin:"
-            },
-            {
-              "type": "code",
-              "code": "=IF(A1>=90, \"A\", IF(A1>=80, \"B\", IF(A1>=70, \"C\", \"D\")))"
-            },
-            {
-              "type": "warning",
-              "text": "Nested IF 7 ta darajadan oshmasligi kerak. Ko'p shartlar bo'lsa IFS yoki SWITCH funksiyasini ishlating."
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "AND va OR funksiyalari"
-            },
-            {
-              "type": "code",
-              "code": "=IF(AND(A1>10, B1<20), \"Ha\", \"Yo'q\")  ← Ikkalasi ham to'g'ri\n=IF(OR(A1>10, B1<20), \"Ha\", \"Yo'q\")    ← Bittasi to'g'ri bo'lsa"
             }
-          ],
-          "formulas": [
-            {
-              "name": "Oddiy IF",
-              "formula": "=IF(A1>50, \"Katta\", \"Kichik\")",
-              "description": "A1 50 dan katta bo'lsa 'Katta', aks holda 'Kichik'"
-            },
-            {
-              "name": "Nested IF (Baholash)",
-              "formula": "=IF(B1>=90,\"A\",IF(B1>=70,\"B\",\"C\"))",
-              "description": "Ballarga qarab baho qo'yish (A/B/C)"
-            },
-            {
-              "name": "IF + AND",
-              "formula": "=IF(AND(A1>0, B1>0), \"OK\", \"Xato\")",
-              "description": "Ikki shart bir vaqtda bajarilsa"
-            },
-            {
-              "name": "IF + OR",
-              "formula": "=IF(OR(A1=\"Sha\", A1=\"Yak\"), \"Dam\", \"Ish\")",
-              "description": "Bittasi to'g'ri bo'lsa kifoya"
-            }
-          ],
-          "shortcuts": [
-            { "action": "Formula bar ochish", "keys": "Ctrl + Shift + U" },
-            { "action": "Function Wizard", "keys": "Shift + F3" }
-          ],
-          "examples": [
-            {
-              "title": "Talabalar baholari",
-              "description": "Ball asosida avtomatik baho qo'yish",
-              "table": {
-                "headers": ["Talaba", "Ball", "Baho"],
-                "rows": [
-                  ["Ali", "85", "B"],
-                  ["Vali", "92", "A"],
-                  ["Gulnora", "68", "D"],
-                  ["Sardor", "76", "C"]
-                ]
-              },
-              "formula": "=IF(B2>=90,\"A\",IF(B2>=80,\"B\",IF(B2>=70,\"C\",\"D\")))"
-            }
-          ],
-          "simulator": true,
-          "simulatorData": {
-            "A1": "Talaba", "B1": "Ball", "C1": "Baho",
-            "A2": "Ali", "B2": "85",
-            "A3": "Vali", "B3": "92",
-            "A4": "Gulnora", "B4": "68",
-            "A5": "Sardor", "B5": "76"
           },
+          "aiKB": [
+            { "q": ["sum nima", "yig'indi"], "a": "SUM — diapazondagi sonlarni qo'shadi. Misol: =SUM(A1:A5)" }
+          ],
           "quiz": {
-            "passingScore": 70,
-            "timeLimit": 5,
+            "passingScore": 70, "timeLimit": 5,
             "questions": [
-              {
-                "question": "IF funksiyasi nechta argument qabul qiladi?",
-                "options": ["1", "2", "3", "4"],
-                "correct": 2,
-                "explanation": "IF(shart, agar_to'g'ri, agar_noto'g'ri) — 3 ta argument."
-              },
-              {
-                "question": "=IF(10>5,\"Ha\",\"Yo'q\") natijasi nima?",
-                "options": ["Ha", "Yo'q", "TRUE", "Xato"],
-                "correct": 0,
-                "explanation": "10 > 5 to'g'ri (TRUE), shuning uchun 'Ha' qaytadi."
-              },
-              {
-                "question": "Bir vaqtda ikki shart bajarilishini tekshirish uchun?",
-                "options": ["IF", "AND", "OR", "NOT"],
-                "correct": 1,
-                "explanation": "AND funksiyasi barcha shartlar to'g'ri bo'lganda TRUE qaytaradi."
-              },
-              {
-                "question": "Teng emas operatori qaysi?",
-                "options": ["!=", "<>", "==", "><"],
-                "correct": 1,
-                "explanation": "Excel'da teng emas <> bilan yoziladi (PHP yoki C++ dagi != emas)."
-              }
+              { "question": "Formula qaysi belgi bilan boshlanadi?", "options": ["+", "=", "#", "@"], "correct": 1, "explanation": "Excel formulasi = bilan boshlanadi." },
+              { "question": "=SUM(A1:A5) nimani hisoblaydi?", "options": ["A1 va A5 ni qo'shadi", "A1 dan A5 gacha yig'indi", "A1 va A5 ni ko'paytiradi"], "correct": 1, "explanation": "SUM diapazondagi barcha sonlar yig'indisini topadi." }
             ]
           }
         },
         {
-          "id": "lesson-4",
-          "title": "COUNTIF & SUMIF",
-          "day": 4,
-          "duration": "45 min",
-          "description": "Shartli hisoblash va yig'indi olish",
-          "topics": [
-            "COUNTIF — shartli hisoblash",
-            "SUMIF — shartli yig'indi",
-            "AVERAGEIF — shartli o'rtacha",
-            "COUNTIFS, SUMIFS (ko'p shartli)",
-            "Mantiqiy operatorlar ishlatish"
-          ],
-          "content": [
-            {
-              "type": "heading",
-              "level": 2,
-              "text": "COUNTIF — Shartli hisoblash"
-            },
-            {
-              "type": "paragraph",
-              "text": "COUNTIF — diapazonda berilgan shartga mos keladigan kataklarni sanaydi."
-            },
-            {
-              "type": "code",
-              "code": "=COUNTIF(diapazon, shart)\n\n=COUNTIF(A1:A10, \">50\")        ← 50 dan katta sonlar\n=COUNTIF(B1:B10, \"Erkak\")       ← \"Erkak\" so'zi nechta marta\n=COUNTIF(C1:C10, \"*\")           ← Bo'sh bo'lmagan kataklar"
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "SUMIF — Shartli yig'indi"
-            },
-            {
-              "type": "paragraph",
-              "text": "SUMIF — shartga mos keladigan kataklarning yig'indisini topadi."
-            },
-            {
-              "type": "code",
-              "code": "=SUMIF(diapazon, shart, [yig'indi_diapazoni])\n\n=SUMIF(A1:A10, \">100\")               ← A da 100 dan katta sonlar yig'indisi\n=SUMIF(A1:A10, \"Olma\", B1:B10)       ← A da 'Olma' bo'lganda B dagi summa"
-            },
-            {
-              "type": "note",
-              "text": "SUMIF da 3-argument (yig'indi diapazoni) ixtiyoriy. Agar berilmasa, 1-argumentdan yig'indi olinadi."
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Ko'p shartli (IFS) funksiyalar"
-            },
-            {
-              "type": "list",
-              "items": [
-                "<code>COUNTIFS</code> — bir nechta shartli hisoblash",
-                "<code>SUMIFS</code> — bir nechta shartli yig'indi",
-                "<code>AVERAGEIFS</code> — bir nechta shartli o'rtacha"
-              ]
-            },
-            {
-              "type": "code",
-              "code": "=SUMIFS(D2:D100, A2:A100, \"Olma\", C2:C100, \">10\")"
-            }
-          ],
-          "formulas": [
-            {
-              "name": "COUNTIF (raqam)",
-              "formula": "=COUNTIF(B2:B20, \">50\")",
-              "description": "B2:B20 da 50 dan katta sonlar soni"
-            },
-            {
-              "name": "COUNTIF (matn)",
-              "formula": "=COUNTIF(A2:A20, \"Toshkent\")",
-              "description": "'Toshkent' so'zi necha marta uchraydi"
-            },
-            {
-              "name": "SUMIF (oddiy)",
-              "formula": "=SUMIF(B2:B100, \">100\")",
-              "description": "B da 100 dan katta sonlar yig'indisi"
-            },
-            {
-              "name": "SUMIF (boshqa ustun)",
-              "formula": "=SUMIF(A2:A100, \"Olma\", C2:C100)",
-              "description": "A da 'Olma' bo'lsa, C dagi sonlarni qo'shish"
-            },
-            {
-              "name": "SUMIFS",
-              "formula": "=SUMIFS(D2:D100, A2:A100, \"Olma\", B2:B100, \">10\")",
-              "description": "Ikki shart bo'yicha yig'indi"
-            }
-          ],
-          "shortcuts": [
-            { "action": "Diapazon tanlash", "keys": "Shift + Click" },
-            { "action": "Butun ustunni tanlash", "keys": "Ctrl + Space" }
-          ],
-          "examples": [
-            {
-              "title": "Sotuvlar tahlili",
-              "description": "Mahsulotlar bo'yicha sotuvlar",
-              "table": {
-                "headers": ["Mahsulot", "Soni", "Narxi"],
-                "rows": [
-                  ["Olma", "20", "100000"],
-                  ["Banan", "15", "75000"],
-                  ["Olma", "30", "150000"],
-                  ["Apelsin", "10", "50000"],
-                  ["Olma", "25", "125000"]
-                ]
-              },
-              "formula": "=SUMIF(A2:A6,\"Olma\",C2:C6)",
-              "result": "375,000 (Olma sotuvlarining umumiy summasi)"
-            }
-          ],
+          "id": "lesson-3", "title": "IF Formula", "day": 3, "duration": "40 min", "description": "Shartli mantiqni Excel'da qo'llash",
+          "topics": ["IF funksiyasi sintaksisi", "Mantiqiy operatorlar"],
+          "content": [{ "type": "heading", "level": 2, "text": "IF funksiyasi" }, { "type": "paragraph", "text": "IF shartni tekshiradi va natijaga qarab javob qaytaradi." }],
           "simulator": true,
-          "simulatorData": {
-            "A1": "Mahsulot", "B1": "Soni", "C1": "Narxi",
-            "A2": "Olma", "B2": "20", "C2": "100000",
-            "A3": "Banan", "B3": "15", "C3": "75000",
-            "A4": "Olma", "B4": "30", "C4": "150000",
-            "A5": "Apelsin", "B5": "10", "C5": "50000",
-            "A6": "Olma", "B6": "25", "C6": "125000"
-          },
-          "quiz": {
-            "passingScore": 70,
-            "timeLimit": 6,
-            "questions": [
-              {
-                "question": "COUNTIF nima qiladi?",
-                "options": [
-                  "Yig'indi hisoblaydi",
-                  "Shartga mos kataklarni sanaydi",
-                  "O'rtachani topadi",
-                  "Maksimum topadi"
-                ],
-                "correct": 1,
-                "explanation": "COUNTIF berilgan shartga mos keladigan kataklar sonini hisoblaydi."
-              },
-              {
-                "question": "=SUMIF(A1:A10,\">50\") nimani hisoblaydi?",
-                "options": [
-                  "50 dan katta sonlar sonini",
-                  "50 dan katta sonlar yig'indisini",
-                  "Hammasini qo'shadi",
-                  "Xato"
-                ],
-                "correct": 1,
-                "explanation": "SUMIF shartga mos sonlarning yig'indisini hisoblaydi."
-              },
-              {
-                "question": "Ikki shart bo'yicha yig'indi olish uchun?",
-                "options": ["SUM", "SUMIF", "SUMIFS", "DSUM"],
-                "correct": 2,
-                "explanation": "SUMIFS bir nechta shart bilan ishlash uchun mo'ljallangan."
-              },
-              {
-                "question": "COUNTIF da shart matn bo'lsa qanday yoziladi?",
-                "options": [
-                  "Olma",
-                  "\"Olma\"",
-                  "'Olma'",
-                  "[Olma]"
-                ],
-                "correct": 1,
-                "explanation": "Matn shartlar qo'shtirnoq ichida yoziladi: \"Olma\"."
-              }
-            ]
-          }
+          "quiz": { "passingScore": 70, "timeLimit": 5, "questions": [{ "question": "IF nechta argument qabul qiladi?", "options": ["1", "2", "3", "4"], "correct": 2, "explanation": "IF(shart, to'g'ri, noto'g'ri) - 3 ta argument." }] }
         },
         {
-          "id": "lesson-5",
-          "title": "VLOOKUP & XLOOKUP",
-          "day": 5,
-          "duration": "60 min",
-          "description": "Ma'lumotlarni qidirib topish — eng muhim Excel funksiyasi",
-          "topics": [
-            "VLOOKUP sintaksisi va ishlatilishi",
-            "Exact match va Approximate match",
-            "VLOOKUP cheklovlari",
-            "XLOOKUP — yangi va kuchli funksiya",
-            "HLOOKUP va INDEX+MATCH"
-          ],
-          "content": [
-            {
-              "type": "heading",
-              "level": 2,
-              "text": "VLOOKUP — Vertical Lookup"
-            },
-            {
-              "type": "paragraph",
-              "text": "VLOOKUP — Excel'dagi eng mashhur va kuchli funksiyalardan biri. U jadvalning chap ustunidan qidirayotgan qiymatni topadi va o'sha qatordan boshqa ma'lumotni qaytaradi."
-            },
-            {
-              "type": "code",
-              "code": "=VLOOKUP(qidirish_qiymati, jadval, ustun_raqami, [exact_match])\n\n=VLOOKUP(\"A001\", A2:D100, 3, FALSE)\n\n• \"A001\" — nimani qidiramiz\n• A2:D100 — qaerdan qidiramiz\n• 3 — nechanchi ustundan natija olamiz\n• FALSE — aniq mos kelishi (TRUE = taxminiy)"
-            },
-            {
-              "type": "warning",
-              "text": "VLOOKUP faqat <strong>chapdan o'ngga</strong> qidiradi! Agar siz qidirayotgan ustun jadvalning o'ng tomonida bo'lsa, VLOOKUP ishlamaydi."
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "XLOOKUP — Yangi avlod (2019+)"
-            },
-            {
-              "type": "paragraph",
-              "text": "XLOOKUP — VLOOKUP ning zamonaviy versiyasi. U barcha kamchiliklarni bartaraf etadi va yanada qulay."
-            },
-            {
-              "type": "code",
-              "code": "=XLOOKUP(qidirish, qidirish_diapazoni, qaytarish_diapazoni)\n\n=XLOOKUP(\"A001\", A2:A100, C2:C100)\n\n✅ Chapdan ham, o'ngdan ham qidiradi\n✅ Topilmasa default qiymat berish mumkin\n✅ Yopiq qidiruv (wildcards)"
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "VLOOKUP vs XLOOKUP"
-            },
-            {
-              "type": "list",
-              "items": [
-                "VLOOKUP — eski (har xil Excel versiyalarida ishlaydi)",
-                "XLOOKUP — yangi (faqat Microsoft 365)",
-                "VLOOKUP — faqat o'ngga qaratadi",
-                "XLOOKUP — har qaysi tomonga ishlaydi",
-                "VLOOKUP — ustun raqami kerak",
-                "XLOOKUP — diapazon beriladi (oson)"
-              ]
-            }
-          ],
-          "formulas": [
-            {
-              "name": "VLOOKUP (aniq)",
-              "formula": "=VLOOKUP(E2, A2:C100, 3, FALSE)",
-              "description": "E2 dagi qiymatni A ustunidan topib, 3-ustun (C) qiymatini qaytarish"
-            },
-            {
-              "name": "VLOOKUP (taxminiy)",
-              "formula": "=VLOOKUP(85, A2:B10, 2, TRUE)",
-              "description": "Eng yaqin kichik qiymatni topish (saralangan ma'lumot uchun)"
-            },
-            {
-              "name": "XLOOKUP (oddiy)",
-              "formula": "=XLOOKUP(E2, A2:A100, C2:C100)",
-              "description": "Eng oson qidiruv usuli"
-            },
-            {
-              "name": "XLOOKUP (default bilan)",
-              "formula": "=XLOOKUP(E2, A:A, C:C, \"Topilmadi\")",
-              "description": "Agar topilmasa 'Topilmadi' yozadi"
-            },
-            {
-              "name": "INDEX + MATCH (alternativ)",
-              "formula": "=INDEX(C2:C100, MATCH(E2, A2:A100, 0))",
-              "description": "VLOOKUP ga alternativ, har tomonga ishlaydi"
-            }
-          ],
-          "shortcuts": [
-            { "action": "Function dialog", "keys": "Shift + F3" },
-            { "action": "Argument tooltips", "keys": "Ctrl + Shift + A" }
-          ],
-          "examples": [
-            {
-              "title": "Mahsulot narxini topish",
-              "description": "Kod orqali mahsulot narxini qidirish",
-              "table": {
-                "headers": ["Kod", "Nom", "Narxi"],
-                "rows": [
-                  ["A001", "Olma", "5000"],
-                  ["A002", "Banan", "3000"],
-                  ["A003", "Apelsin", "4500"],
-                  ["A004", "Anor", "8000"]
-                ]
-              },
-              "formula": "=VLOOKUP(\"A003\", A2:C5, 3, FALSE)",
-              "result": "4,500"
-            }
-          ],
+          "id": "lesson-4", "title": "COUNTIF & SUMIF", "day": 4, "duration": "45 min", "description": "Shartli hisoblash va yig'indi olish",
+          "topics": ["COUNTIF", "SUMIF"], "content": [{ "type": "paragraph", "text": "COUNTIF shartga mos kataklarni sanaydi." }],
           "simulator": true,
-          "simulatorData": {
-            "A1": "Kod", "B1": "Nom", "C1": "Narxi",
-            "A2": "A001", "B2": "Olma", "C2": "5000",
-            "A3": "A002", "B3": "Banan", "C3": "3000",
-            "A4": "A003", "B4": "Apelsin", "C4": "4500",
-            "A5": "A004", "B5": "Anor", "C5": "8000",
-            "E1": "Qidirish:", "E2": "A003"
-          },
-          "quiz": {
-            "passingScore": 70,
-            "timeLimit": 7,
-            "questions": [
-              {
-                "question": "VLOOKUP qaysi tomonga qidiradi?",
-                "options": [
-                  "Faqat chapga",
-                  "Faqat o'ngga",
-                  "Ikki tomonga",
-                  "Yuqoriga"
-                ],
-                "correct": 1,
-                "explanation": "VLOOKUP faqat chap ustundan qidirib, o'ng ustundagi qiymatni qaytaradi."
-              },
-              {
-                "question": "VLOOKUP da exact match uchun nima yoziladi?",
-                "options": ["TRUE", "FALSE", "0", "B va C ikkalasi"],
-                "correct": 3,
-                "explanation": "FALSE yoki 0 yozsa bo'ladi — ikkalasi ham bir xil ma'noda."
-              },
-              {
-                "question": "XLOOKUP qachon paydo bo'lgan?",
-                "options": ["Excel 2003", "Excel 2010", "Excel 2019+", "Excel 365 only"],
-                "correct": 2,
-                "explanation": "XLOOKUP Excel 2019 va Microsoft 365 dan boshlab mavjud."
-              },
-              {
-                "question": "INDEX+MATCH nima uchun ishlatiladi?",
-                "options": [
-                  "Tezroq qidirish",
-                  "VLOOKUP alternativ — har tomonga ishlaydi",
-                  "Faqat raqamlar uchun",
-                  "Hech narsa uchun"
-                ],
-                "correct": 1,
-                "explanation": "INDEX+MATCH — VLOOKUP ga alternativ, chap-o'ng cheklov yo'q."
-              },
-              {
-                "question": "=VLOOKUP(\"A001\",A:C,2,FALSE) nimani qaytaradi?",
-                "options": [
-                  "A ustunidan qiymat",
-                  "B ustunidan qiymat (2-ustun)",
-                  "C ustunidan qiymat",
-                  "Xato"
-                ],
-                "correct": 1,
-                "explanation": "3-argument 2 — bu A dan boshlab 2-ustun, ya'ni B ustun."
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "id": "mod-3",
-      "title": "Ma'lumot tahlili",
-      "lessons": [
-        {
-          "id": "lesson-6",
-          "title": "Filter & Sort",
-          "day": 6,
-          "duration": "35 min",
-          "description": "Ma'lumotlarni saralash va filtrlash",
-          "topics": [
-            "Sort (saralash) — A-Z, Z-A, kichik-katta",
-            "Filter (filtrlash) — kerakli ma'lumotlarni ko'rsatish",
-            "Custom Sort (bir nechta darajada)",
-            "Number filters, Text filters, Date filters",
-            "Advanced Filter"
-          ],
-          "content": [
-            {
-              "type": "heading",
-              "level": 2,
-              "text": "Sort — Saralash"
-            },
-            {
-              "type": "paragraph",
-              "text": "Sort yordamida ma'lumotlarni alfavit yoki raqamlar bo'yicha tartibga solish mumkin."
-            },
-            {
-              "type": "list",
-              "items": [
-                "<strong>A → Z</strong> — alfavit bo'yicha (kichikdan kattaga)",
-                "<strong>Z → A</strong> — teskari (kattadan kichkkaga)",
-                "<strong>Smallest to Largest</strong> — raqamlar bo'yicha o'sish",
-                "<strong>Largest to Smallest</strong> — raqamlar bo'yicha kamayish"
-              ]
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Filter — Filtrlash"
-            },
-            {
-              "type": "paragraph",
-              "text": "Filter — katta jadvaldan kerakli ma'lumotlarni tezda topish vositasi. Kerakmas qatorlar vaqtincha yashirinadi."
-            },
-            {
-              "type": "note",
-              "text": "Filter ni yoqish uchun: jadvalning birinchi qatoriga turing → <strong>Data → Filter</strong> (yoki Ctrl + Shift + L)."
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Filter turlari"
-            },
-            {
-              "type": "list",
-              "items": [
-                "<strong>Text Filters</strong> — Equals, Contains, Begins with",
-                "<strong>Number Filters</strong> — Greater than, Less than, Between",
-                "<strong>Date Filters</strong> — Today, This week, Last month",
-                "<strong>Color Filters</strong> — Rang bo'yicha filtrlash"
-              ]
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Custom Sort (Bir nechta darajada)"
-            },
-            {
-              "type": "paragraph",
-              "text": "Misol uchun, avval shahar bo'yicha, keyin yosh bo'yicha saralash mumkin. Bu Custom Sort orqali amalga oshiriladi."
-            }
-          ],
-          "shortcuts": [
-            { "action": "Filter yoqish/o'chirish", "keys": "Ctrl + Shift + L" },
-            { "action": "Sort A→Z", "keys": "Alt + A + S + A" },
-            { "action": "Sort Z→A", "keys": "Alt + A + S + D" },
-            { "action": "Custom Sort", "keys": "Alt + D + S" },
-            { "action": "Filter dropdown ochish", "keys": "Alt + ↓" }
-          ],
-          "examples": [
-            {
-              "title": "Xodimlar ro'yxati",
-              "description": "Yosh bo'yicha kichkkaga saralash va shahar bo'yicha filtrlash",
-              "table": {
-                "headers": ["Ism", "Yosh", "Shahar", "Maosh"],
-                "rows": [
-                  ["Ali", "25", "Toshkent", "5000000"],
-                  ["Vali", "30", "Samarqand", "6000000"],
-                  ["Gulnora", "28", "Toshkent", "5500000"],
-                  ["Sardor", "35", "Buxoro", "7000000"]
-                ]
-              }
-            }
-          ],
-          "simulator": true,
-          "simulatorData": {
-            "A1": "Ism", "B1": "Yosh", "C1": "Shahar", "D1": "Maosh",
-            "A2": "Ali", "B2": "25", "C2": "Toshkent", "D2": "5000000",
-            "A3": "Vali", "B3": "30", "C3": "Samarqand", "D3": "6000000",
-            "A4": "Gulnora", "B4": "28", "C4": "Toshkent", "D4": "5500000",
-            "A5": "Sardor", "B5": "35", "C5": "Buxoro", "D5": "7000000"
-          },
-          "quiz": {
-            "passingScore": 70,
-            "timeLimit": 5,
-            "questions": [
-              {
-                "question": "Filter qaysi shortcut bilan yoqiladi?",
-                "options": ["Ctrl + F", "Ctrl + Shift + L", "Ctrl + L", "F5"],
-                "correct": 1,
-                "explanation": "Ctrl + Shift + L — Filter ni yoqish/o'chirish uchun."
-              },
-              {
-                "question": "Sort nima qiladi?",
-                "options": [
-                  "Ma'lumotni yashirin qiladi",
-                  "Tartibga soladi",
-                  "O'chiradi",
-                  "Joyini almashtiradi"
-                ],
-                "correct": 1,
-                "explanation": "Sort ma'lumotlarni alfavit yoki raqam tartibida saralaydi."
-              },
-              {
-                "question": "Bir vaqtda 2 ta ustun bo'yicha saralash uchun?",
-                "options": ["Sort", "Filter", "Custom Sort", "VLOOKUP"],
-                "correct": 2,
-                "explanation": "Custom Sort — bir nechta darajada saralash uchun."
-              }
-            ]
-          }
+          "quiz": { "passingScore": 70, "timeLimit": 5, "questions": [{ "question": "COUNTIF nima qiladi?", "options": ["Sanaydi", "Yig'indi topadi", "O'rtacha topadi"], "correct": 0, "explanation": "COUNTIF berilgan shartga mos kataklar sonini hisoblaydi." }] }
         },
         {
-          "id": "lesson-7",
-          "title": "Pivot Table",
-          "day": 7,
-          "duration": "60 min",
-          "description": "Excel'ning eng kuchli vositasi — interaktiv ma'lumot tahlili",
-          "topics": [
-            "Pivot Table nima va nima uchun kerak",
-            "Pivot Table yaratish",
-            "Rows, Columns, Values, Filters maydonlari",
-            "Group va Subtotal",
-            "Pivot Chart yaratish"
-          ],
-          "content": [
-            {
-              "type": "heading",
-              "level": 2,
-              "text": "Pivot Table nima?"
-            },
-            {
-              "type": "paragraph",
-              "text": "Pivot Table — bu Excel'dagi eng kuchli ma'lumot tahlil qilish vositasi. U katta jadvallarni qisqartirib, statistikani avtomatik hisoblab beradi."
-            },
-            {
-              "type": "note",
-              "text": "1000 qatorli ma'lumotni 5 daqiqada tahlil qila olasiz! Pivot Table bilan har qanday hisobotni juda tez tayyorlash mumkin."
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Pivot Table yaratish bosqichlari"
-            },
-            {
-              "type": "list",
-              "items": [
-                "1. Ma'lumot jadvalini tanlang",
-                "2. <strong>Insert → PivotTable</strong> bosing",
-                "3. New Worksheet ni tanlang",
-                "4. Maydonlarni Drag & Drop qiling",
-                "5. Tayyor!"
-              ]
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "4 ta asosiy maydon"
-            },
-            {
-              "type": "list",
-              "items": [
-                "<strong>📊 Rows</strong> — Qatorlar (asosiy guruhlash)",
-                "<strong>📈 Columns</strong> — Ustunlar (qo'shimcha guruhlash)",
-                "<strong>🔢 Values</strong> — Qiymatlar (hisoblanadigan)",
-                "<strong>🔍 Filters</strong> — Filterlar (umumiy filter)"
-              ]
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Values uchun hisob turlari"
-            },
-            {
-              "type": "list",
-              "items": [
-                "Sum — yig'indi (default raqamlar uchun)",
-                "Count — soni (matn uchun)",
-                "Average — o'rtacha",
-                "Max / Min — eng katta/kichik",
-                "Product — ko'paytma",
-                "% of Total — umumiy summadan foiz"
-              ]
-            },
-            {
-              "type": "warning",
-              "text": "Pivot Table avtomatik yangilanmaydi! Yangi ma'lumot qo'shganda <strong>Right-click → Refresh</strong> qiling."
-            }
-          ],
-          "shortcuts": [
-            { "action": "Pivot Table yaratish", "keys": "Alt + N + V" },
-            { "action": "Pivot Table refresh", "keys": "Alt + F5" },
-            { "action": "Field List ochish/yopish", "keys": "Alt + JT + L" }
-          ],
-          "examples": [
-            {
-              "title": "Sotuvlar tahlili",
-              "description": "Bu jadvaldan Pivot Table yaratib, har bir mahsulotning umumiy savdosini topish mumkin",
-              "table": {
-                "headers": ["Mahsulot", "Shahar", "Sana", "Summa"],
-                "rows": [
-                  ["Olma", "Toshkent", "01.01", "500000"],
-                  ["Banan", "Samarqand", "01.01", "300000"],
-                  ["Olma", "Buxoro", "02.01", "450000"],
-                  ["Apelsin", "Toshkent", "02.01", "200000"],
-                  ["Olma", "Toshkent", "03.01", "600000"]
-                ]
-              }
-            }
-          ],
+          "id": "lesson-5", "title": "VLOOKUP & XLOOKUP", "day": 5, "duration": "60 min", "description": "Ma'lumotlarni qidirib topish",
+          "topics": ["VLOOKUP", "XLOOKUP"], "content": [{ "type": "paragraph", "text": "VLOOKUP jadvaldan qidirish uchun ishlatiladi." }],
           "simulator": true,
-          "quiz": {
-            "passingScore": 70,
-            "timeLimit": 7,
-            "questions": [
-              {
-                "question": "Pivot Table qayerda yaratiladi?",
-                "options": [
-                  "Home → PivotTable",
-                  "Insert → PivotTable",
-                  "Data → PivotTable",
-                  "Formulas → PivotTable"
-                ],
-                "correct": 1,
-                "explanation": "Pivot Table Insert tab ostida joylashgan."
-              },
-              {
-                "question": "Pivot Table da nechta asosiy maydon bor?",
-                "options": ["2", "3", "4", "5"],
-                "correct": 2,
-                "explanation": "4 ta: Rows, Columns, Values, Filters."
-              },
-              {
-                "question": "Pivot Table avtomatik yangilanadimi?",
-                "options": ["Ha", "Yo'q, Refresh kerak", "Faqat saqlasangiz", "Har 5 daqiqada"],
-                "correct": 1,
-                "explanation": "Pivot Table avtomatik yangilanmaydi. Refresh tugmasini bosish kerak."
-              },
-              {
-                "question": "Values maydonida raqamlar uchun default nima?",
-                "options": ["Count", "Average", "Sum", "Max"],
-                "correct": 2,
-                "explanation": "Raqamlar uchun default Sum (yig'indi), matnlar uchun Count."
-              }
-            ]
-          }
+          "quiz": { "passingScore": 70, "timeLimit": 5, "questions": [{ "question": "VLOOKUP qaysi tomonga qidiradi?", "options": ["Chapga", "O'ngga", "Yuqoriga", "Pastga"], "correct": 1, "explanation": "VLOOKUP faqat o'ng ustunga qarab qidiradi." }] }
         },
         {
-          "id": "lesson-8",
-          "title": "Mini Dashboard",
-          "day": 8,
-          "duration": "75 min",
-          "description": "Excel'da chiroyli va interaktiv Dashboard yaratish",
-          "topics": [
-            "Dashboard nima va u nimaga kerak",
-            "KPI kartalarini yaratish",
-            "Charts (grafiklar) yaratish",
-            "Slicer va Timeline qo'shish",
-            "Dashboard dizayni va estetikasi"
-          ],
-          "content": [
-            {
-              "type": "heading",
-              "level": 2,
-              "text": "Dashboard nima?"
-            },
-            {
-              "type": "paragraph",
-              "text": "Dashboard — bu bir nechta ko'rsatkichlarni bitta ekranda ko'rsatadigan interaktiv hisobot. U boshqaruvchilar va tahlilchilar uchun juda muhim vosita."
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Dashboard tarkibi"
-            },
-            {
-              "type": "list",
-              "items": [
-                "📊 <strong>KPI Cards</strong> — Asosiy ko'rsatkichlar (jami sotuv, foyda, mijozlar)",
-                "📈 <strong>Charts</strong> — Grafiklar (bar, line, pie, donut)",
-                "🎚️ <strong>Slicers</strong> — Interaktiv filterlar",
-                "📅 <strong>Timeline</strong> — Sanalar bo'yicha filter",
-                "📋 <strong>Tables</strong> — Detallashtirilgan ma'lumot"
-              ]
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Dashboard yaratish bosqichlari"
-            },
-            {
-              "type": "list",
-              "items": [
-                "1. <strong>Ma'lumot tayyorlash</strong> — Toza, tartibli jadval",
-                "2. <strong>Pivot Tables yaratish</strong> — Hisob-kitoblar uchun",
-                "3. <strong>KPI Cards qo'shish</strong> — Formula yoki Card visual",
-                "4. <strong>Charts qo'shish</strong> — Pivot Charts juda qulay",
-                "5. <strong>Slicers qo'shish</strong> — Interaktivlik uchun",
-                "6. <strong>Dizayn</strong> — Ranglar, font, joylashuv",
-                "7. <strong>Test qilish</strong> — Hammasi to'g'ri ishlayaptimi?"
-              ]
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Dashboard dizayn maslahatlari"
-            },
-            {
-              "type": "list",
-              "items": [
-                "✅ Sodda va tushunarli bo'lsin",
-                "✅ Asosiy ko'rsatkichlar yuqorida",
-                "✅ Bir xil rang sxemasi ishlating",
-                "✅ Gridlines ni o'chiring (chiroyli ko'rinadi)",
-                "❌ Juda ko'p grafik bermang",
-                "❌ Juda ko'p rang ishlatmang (max 3-4)"
-              ]
-            },
-            {
-              "type": "note",
-              "text": "Yaxshi Dashboard — 5 sekundda asosiy ma'lumotni tushunish mumkin bo'lgan Dashboard."
-            },
-            {
-              "type": "heading",
-              "level": 3,
-              "text": "Mashhur Chart turlari"
-            },
-            {
-              "type": "list",
-              "items": [
-                "<strong>Column / Bar</strong> — Taqqoslash uchun",
-                "<strong>Line</strong> — Vaqt bo'yicha o'zgarish",
-                "<strong>Pie / Donut</strong> — Foizlar uchun",
-                "<strong>Area</strong> — To'plamlar uchun",
-                "<strong>Scatter</strong> — Bog'liqlikni ko'rsatish"
-              ]
-            }
-          ],
-          "shortcuts": [
-            { "action": "Tezkor Chart yaratish", "keys": "Alt + F1" },
-            { "action": "Chart yangi sheet'da", "keys": "F11" },
-            { "action": "Slicer qo'shish", "keys": "Alt + JT + SF" }
-          ],
-          "examples": [
-            {
-              "title": "Oddiy savdo Dashboard tarkibi",
-              "description": "Quyidagi elementlarni kiriting",
-              "table": {
-                "headers": ["Element", "Joylashuv", "Maqsad"],
-                "rows": [
-                  ["KPI: Jami sotuv", "Yuqori chap", "Umumiy ko'rsatkich"],
-                  ["KPI: Mijozlar soni", "Yuqori o'rta", "Mijozlar tahlili"],
-                  ["KPI: O'rtacha chek", "Yuqori o'ng", "Sifat ko'rsatkichi"],
-                  ["Column Chart", "O'rta chap", "Oylik sotuv"],
-                  ["Pie Chart", "O'rta o'ng", "Mahsulot ulushi"],
-                  ["Slicer", "Pastki chap", "Filter (sana, shahar)"]
-                ]
-              }
-            }
-          ],
+          "id": "lesson-6", "title": "Filter & Sort", "day": 6, "duration": "35 min", "description": "Ma'lumotlarni saralash va filtrlash",
+          "topics": ["Sort", "Filter"], "content": [{ "type": "paragraph", "text": "Sort — saralash, Filter — filtrlash." }],
           "simulator": true,
-          "quiz": {
-            "passingScore": 70,
-            "timeLimit": 6,
-            "questions": [
-              {
-                "question": "Dashboard asosan nima uchun?",
-                "options": [
-                  "Ma'lumot kiritish",
-                  "Bir nechta ko'rsatkichni bir joyda ko'rsatish",
-                  "Faqat saqlash",
-                  "Chop etish"
-                ],
-                "correct": 1,
-                "explanation": "Dashboard bir necha KPI va grafiklarni bir ekranda ko'rsatish uchun."
-              },
-              {
-                "question": "Slicer nima?",
-                "options": [
-                  "Grafik turi",
-                  "Interaktiv filter",
-                  "Formula",
-                  "Cell turi"
-                ],
-                "correct": 1,
-                "explanation": "Slicer — Pivot Table yoki jadval uchun interaktiv vizual filter."
-              },
-              {
-                "question": "Tezkor chart yaratish shortcuti?",
-                "options": ["F2", "F5", "Alt + F1", "Ctrl + C"],
-                "correct": 2,
-                "explanation": "Alt + F1 — joriy sheetda chart yaratadi. F11 esa yangi sheetda."
-              },
-              {
-                "question": "Foizlarni ko'rsatish uchun eng yaxshi chart?",
-                "options": ["Line", "Pie / Donut", "Scatter", "Area"],
-                "correct": 1,
-                "explanation": "Pie va Donut chart'lar foizlarni ko'rsatish uchun ideal."
-              },
-              {
-                "question": "Dashboard'da maks nechta rang ishlatish tavsiya etiladi?",
-                "options": ["1-2", "3-4", "5-7", "10+"],
-                "correct": 1,
-                "explanation": "Professional dashboard'da 3-4 ta rang yetarli. Ko'pi ko'zga og'ir tuyuladi."
-              }
-            ]
-          }
+          "quiz": { "passingScore": 70, "timeLimit": 5, "questions": [{ "question": "Filter qaysi shortcut bilan yoqiladi?", "options": ["Ctrl+F", "Ctrl+Shift+L", "Ctrl+L"], "correct": 1, "explanation": "Ctrl + Shift + L — Filter ni yoqadi." }] }
+        },
+        {
+          "id": "lesson-7", "title": "Pivot Table", "day": 7, "duration": "60 min", "description": "Interaktiv ma'lumot tahlili",
+          "topics": ["Pivot Table yaratish", "Rows, Columns, Values"], "content": [{ "type": "paragraph", "text": "Pivot Table katta jadvallarni qisqartirib hisoblab beradi." }],
+          "simulator": true,
+          "quiz": { "passingScore": 70, "timeLimit": 5, "questions": [{ "question": "Pivot Table qayerda yaratiladi?", "options": ["Insert", "Home", "Data", "Formulas"], "correct": 0, "explanation": "Insert tab ostida PivotTable bor." }] }
+        },
+        {
+          "id": "lesson-8", "title": "Mini Dashboard", "day": 8, "duration": "75 min", "description": "Chiroyli va interaktiv Dashboard yaratish",
+          "topics": ["KPI kartalari", "Slicers"], "content": [{ "type": "paragraph", "text": "Dashboard bir nechta ko'rsatkichlarni bitta ekranda ko'rsatadi." }],
+          "simulator": true,
+          "quiz": { "passingScore": 70, "timeLimit": 5, "questions": [{ "question": "Dashboard asosan nima uchun?", "options": ["Ma'lumot kiritish", "Ko'rsatkichlarni ko'rsatish", "Saqlash"], "correct": 1, "explanation": "Dashboard bir necha KPI va grafiklarni ko'rsatish uchun." }] }
         }
       ]
     }
